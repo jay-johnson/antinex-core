@@ -1,0 +1,27 @@
+{
+    "created": "2018-03-05 07:02:01",
+    "feature_to_predict": "close",
+    "features_to_process": [
+        "high",
+        "low",
+        "open",
+        "volume"
+    ],
+    "headers": [
+        "close",
+        "high",
+        "low",
+        "open",
+        "volume"
+    ],
+    "ignore_features": [],
+    "label_rules": {},
+    "output_type": "clean",
+    "pipeline_files": [
+        "./tests/datasets/regression/stock.csv"
+    ],
+    "post_proc_rules": {
+        "drop_columns": [
+        ]
+    }
+}

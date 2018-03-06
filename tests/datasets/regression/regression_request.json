@@ -1,0 +1,46 @@
+{
+    "manifest": {
+        "ml_type": "regression",
+        "predict_feature": "close",
+        "csv_file": "./tests/datasets/regression/stock.csv",
+        "meta_file": "./tests/datasets/regression/stock_metadata.json",
+        "seed": 7,
+        "batch_size": 32,
+        "test_size": 0.2,
+        "epochs": 5,
+        "num_splits": 2,
+        "loss": "mse",
+        "optimizer": "adam",
+        "verbose": 1,
+        "history": [
+        ],
+        "metrics": [
+            "mse",
+            "mae",
+            "mape",
+            "cosine"
+        ],
+        "features_to_process": [
+            "high",
+            "low",
+            "open",
+            "volume"
+        ],
+        "headers": [
+            "close",
+            "high",
+            "low",
+            "open",
+            "volume"
+        ],
+        "ignore_features": [],
+        "label_rules": {},
+        "output_type": "clean",
+        "pipeline_files": [
+        ],
+        "post_proc_rules": {
+            "drop_columns": [
+            ]
+        }
+    }
+}

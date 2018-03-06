@@ -1,0 +1,48 @@
+{
+    "label": "Close-Regression",
+    "dataset": "./tests/datasets/regression/stock.csv",
+    "ml_type": "regression",
+    "predict_feature": "close",
+    "features_to_process": [
+        "high",
+        "low",
+        "open",
+        "volume"
+    ],
+    "ignore_features": [
+    ],
+    "sort_values": [
+    ],
+    "seed": 7,
+    "test_size": 0.2,
+    "batch_size": 32,
+    "epochs": 5,
+    "loss": "mse",
+    "metrics": [
+        "mse",
+        "mae",
+        "mape",
+        "cosine"
+    ],
+    "num_splits": 2,
+    "optimizer": "adam",
+    "model_desc": {
+        "layers": [
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 12
+            },
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 6
+            },
+            {
+                "activation": null,
+                "init": "uniform",
+                "num_neurons": 1
+            }
+        ]
+    }
+}
