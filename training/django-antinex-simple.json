@@ -24,7 +24,7 @@
     "seed": 42,
     "test_size": 0.2,
     "batch_size": 32,
-    "epochs": 5,
+    "epochs": 10,
     "num_splits": 2,
     "loss": "binary_crossentropy",
     "optimizer": "adam",
@@ -43,6 +43,10 @@
                 "num_neurons": 250,
                 "init": "uniform",
                 "activation": "relu"
+            },
+            {
+                "layer_type": "dropout",
+                "rate": 0.1
             },
             {
                 "num_neurons": 200,

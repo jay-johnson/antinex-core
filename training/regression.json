@@ -6,37 +6,63 @@
     "features_to_process": [
         "high",
         "low",
-        "open",
-        "volume"
+        "open"
     ],
     "ignore_features": [
+        "volume"
     ],
     "sort_values": [
     ],
     "seed": 7,
     "test_size": 0.2,
     "batch_size": 32,
-    "epochs": 5,
+    "epochs": 50,
     "num_splits": 2,
     "loss": "mse",
     "optimizer": "adam",
     "metrics": [
-        "mse",
-        "mae",
-        "mape",
-        "cosine"
+        "accuracy"
     ],
     "model_desc": {
         "layers": [
             {
                 "activation": "relu",
                 "init": "uniform",
-                "num_neurons": 12
+                "num_neurons": 500
+            },
+            {
+                "layer_type": "dropout",
+                "rate": 0.1
             },
             {
                 "activation": "relu",
                 "init": "uniform",
-                "num_neurons": 6
+                "num_neurons": 500
+            },
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 400
+            },
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 300
+            },
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 200
+            },
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 100
+            },
+            {
+                "activation": "relu",
+                "init": "uniform",
+                "num_neurons": 50
             },
             {
                 "activation": null,

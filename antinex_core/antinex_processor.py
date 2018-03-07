@@ -207,6 +207,7 @@ class AntiNexProcessor:
                       .format(
                         req["label"],
                         e))
+        ml_type = req["ml_type"].lower()
         predict_feature = req["predict_feature"]
         predictions = []
         res = antinex_utils.make_predictions.make_predictions(req)
@@ -227,13 +228,28 @@ class AntiNexProcessor:
                 original_value = None
                 if org_feature in node:
                     original_value = node[org_feature]
-                log.info(("sample={} - {}={} predicted={} label={}")
-                         .format(
-                            node["_row_idx"],
-                            predict_feature,
-                            original_value,
-                            node[predict_feature],
-                            label_name))
+                if "regression" in ml_type:
+                    log.info(("sample={} - {}={} predicted={}")
+                             .format(
+                                node["_row_idx"],
+                                predict_feature,
+                                float(original_value),
+                                float(node[predict_feature])))
+                elif "classification" in ml_type:
+                    log.info(("sample={} - {}={} predicted={} label={}")
+                             .format(
+                                node["_row_idx"],
+                                predict_feature,
+                                original_value,
+                                node[predict_feature],
+                                label_name))
+                else:
+                    log.info(("sample={} - {}={} predicted={}")
+                             .format(
+                                node["_row_idx"],
+                                predict_feature,
+                                original_value,
+                                node[predict_feature]))
             # end of predicting predictions
 
             if show_model_json:
