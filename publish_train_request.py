@@ -14,7 +14,8 @@ parser = argparse.ArgumentParser(description=("Launch a Train "
                                               "core"))
 parser.add_argument(
     "-f",
-    help="request json file to use default: ./training/django-antinex.json",
+    help=("request json file to use default: "
+          "./training/django-antinex-simple.json"),
     required=False,
     dest="request_file")
 parser.add_argument(
@@ -30,10 +31,7 @@ log = build_colorized_logger(name=name)
 
 log.info("{} - start".format(name))
 
-# Celery Transports:
-# http://docs.celeryproject.org/projects/kombu/en/latest/userguide/connections.html#transport-comparison
-
-request_file = "./training/django-antinex.json"
+request_file = "./training/django-antinex-simple.json"
 if args.request_file:
     request_file = args.request_file
 
@@ -59,17 +57,12 @@ if not os.path.exists(request_file):
                 request_file))
     sys.exit(1)
 
-# https://redis.io/topics/security
-#
-# Redis does not support encryption, but I would like to try out ssl-termination
-# using an haproxy/nginx container running as an ssl-proxy to see if this works.
-
 # import ssl
 # Connection("amqp://", login_method='EXTERNAL', ssl={
-#               "ca_certs": '/etc/pki/tls/certs/something.crt',
-#               "keyfile": '/etc/something/system.key',
-#               "certfile": '/etc/something/system.cert',
-#               "cert_reqs": ssl.CERT_REQUIRED,
+#            "ca_certs": '/etc/pki/tls/certs/something.crt',
+#            "keyfile": '/etc/something/system.key',
+#            "certfile": '/etc/something/system.cert',
+#            "cert_reqs": ssl.CERT_REQUIRED,
 #          })
 #
 ssl_options = {}
@@ -88,7 +81,6 @@ else:
     now = datetime.datetime.now().isoformat()
     body = req_data
     body["created"] = now
-    body["created"] = now
     log.info("loading predict_rows")
     predict_rows_df = pd.read_csv(req_data["dataset"])
     predict_rows = []
@@ -105,7 +97,7 @@ else:
     log.info(("Sending msg={} "
               "ex={} rk={}")
              .format(
-                body,
+                str(body)[0:10],
                 exchange_name,
                 routing_key))
 

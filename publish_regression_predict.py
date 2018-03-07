@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(description=("Launch a Predict Dataset "
 parser.add_argument(
     "-f",
     help=("request json file to use default: "
-          "./training/django-antinex-simple.json"),
+          "./training/regression.json"),
     required=False,
     dest="request_file")
 parser.add_argument(
@@ -31,10 +31,7 @@ log = build_colorized_logger(name=name)
 
 log.info("{} - start".format(name))
 
-# Celery Transports:
-# http://docs.celeryproject.org/projects/kombu/en/latest/userguide/connections.html#transport-comparison
-
-request_file = "./training/django-antinex-simple.json"
+request_file = "./training/regression.json"
 if args.request_file:
     request_file = args.request_file
 
