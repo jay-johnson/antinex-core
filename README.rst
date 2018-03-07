@@ -88,7 +88,7 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
         "seed": 42,
         "test_size": 0.2,
         "batch_size": 32,
-        "epochs": 5,
+        "epochs": 10,
         "num_splits": 2,
         "loss": "binary_crossentropy",
         "optimizer": "adam",
@@ -107,6 +107,10 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
                     "num_neurons": 250,
                     "init": "uniform",
                     "activation": "relu"
+                },
+                {
+                    "layer_type": "dropout",
+                    "rate": 0.1
                 },
                 {
                     "num_neurons": 200,
@@ -148,7 +152,6 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
         "version": 1
     }
 
-
 Regression prediction tasks are also supported, and here is an example from an included dataset with mock stock prices:
 
 ::
@@ -161,37 +164,63 @@ Regression prediction tasks are also supported, and here is an example from an i
         "features_to_process": [
             "high",
             "low",
-            "open",
-            "volume"
+            "open"
         ],
         "ignore_features": [
+            "volume"
         ],
         "sort_values": [
         ],
         "seed": 7,
         "test_size": 0.2,
         "batch_size": 32,
-        "epochs": 5,
+        "epochs": 50,
         "num_splits": 2,
         "loss": "mse",
         "optimizer": "adam",
         "metrics": [
-            "mse",
-            "mae",
-            "mape",
-            "cosine"
+            "accuracy"
         ],
         "model_desc": {
             "layers": [
                 {
                     "activation": "relu",
                     "init": "uniform",
-                    "num_neurons": 12
+                    "num_neurons": 500
+                },
+                {
+                    "layer_type": "dropout",
+                    "rate": 0.1
                 },
                 {
                     "activation": "relu",
                     "init": "uniform",
-                    "num_neurons": 6
+                    "num_neurons": 500
+                },
+                {
+                    "activation": "relu",
+                    "init": "uniform",
+                    "num_neurons": 400
+                },
+                {
+                    "activation": "relu",
+                    "init": "uniform",
+                    "num_neurons": 300
+                },
+                {
+                    "activation": "relu",
+                    "init": "uniform",
+                    "num_neurons": 200
+                },
+                {
+                    "activation": "relu",
+                    "init": "uniform",
+                    "num_neurons": 100
+                },
+                {
+                    "activation": "relu",
+                    "init": "uniform",
+                    "num_neurons": 50
                 },
                 {
                     "activation": null,
@@ -201,8 +230,6 @@ Regression prediction tasks are also supported, and here is an example from an i
             ]
         }
     }
-   
-
 
 Development
 -----------
