@@ -1,5 +1,5 @@
 {
-    "label": "Close-Regression",
+    "label": "Scaler-Close-Regression",
     "dataset": "./tests/datasets/regression/stock.csv",
     "apply_scaler": true,
     "ml_type": "regression",

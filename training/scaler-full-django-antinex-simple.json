@@ -1,5 +1,5 @@
 {
-    "label": "Full-Django-AntiNex-Simple-DNN",
+    "label": "Full-Django-AntiNex-Simple-Scaler-DNN",
     "dataset": "/opt/antinex-datasets/v1/webapps/django/training-ready/v1_django_cleaned.csv",
     "apply_scaler": true,
     "ml_type": "classification",

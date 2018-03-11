@@ -52,25 +52,27 @@ Please make sure to clone the dataset repo to the pre-configured location:
 
     git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
 
+Predict
+
 ::
 
-    ./publish_regression_predict.py -f training/scaler-full-django-antinex-simple.json
+    ./publish_predict_request.py -f training/scaler-full-django-antinex-simple.json
 
-    2018-03-11 00:46:58,352 - antinex-prc - INFO - sample=30189 - label_value=1.0 predicted=1 label=attack
-    2018-03-11 00:46:58,352 - antinex-prc - INFO - sample=30190 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,352 - antinex-prc - INFO - sample=30191 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30192 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30193 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30194 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30195 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30196 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30197 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30198 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30199 - label_value=-1.0 predicted=-1 label=not_attack
-    2018-03-11 00:46:58,353 - antinex-prc - INFO - Full-Django-AntiNex-Simple-DNN made predictions=30200 found=30200 accuracy=99.84271523178808
-    2018-03-11 00:46:58,354 - antinex-prc - INFO - Full-Django-AntiNex-Simple-DNN - saving model=full-django-antinex-simple-dnn
+    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30189 - label_value=1.0 predicted=1 label=attack
+    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30190 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30191 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30192 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30193 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30194 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30195 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30196 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30197 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,177 - antinex-prc - INFO - sample=30198 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,177 - antinex-prc - INFO - sample=30199 - label_value=-1.0 predicted=0 label=not_attack
+    2018-03-11 09:14:38,177 - antinex-prc - INFO - Full-Django-AntiNex-Simple-Scaler-DNN made predictions=30200 found=30200 accuracy=99.84685430463577
+    2018-03-11 09:14:38,177 - antinex-prc - INFO - Full-Django-AntiNex-Simple-Scaler-DNN - saving model=full-django-antinex-simple-scaler-dnn
 
-If you do not have the datasets cloned locally, then you can use the included minimized dataset from the repo:
+If you do not have the datasets cloned locally, you can use the included minimized dataset from the repo:
 
 ::
 

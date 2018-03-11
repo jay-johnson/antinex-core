@@ -1,5 +1,5 @@
 {
-    "label": "Django-AntiNex-Simple-DNN",
+    "label": "Django-AntiNex-Simple-Scaler-DNN",
     "dataset": "./tests/datasets/classification/cleaned_attack_scans.csv",
     "apply_scaler": true,
     "ml_type": "classification",
