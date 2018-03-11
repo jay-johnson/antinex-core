@@ -44,7 +44,9 @@ Or with celery:
 Publish a Predict Request
 -------------------------
 
-To train and predict with the new automated scaler-normalized dataset with a 99.8% prediction accuracy for detecting attacks using a wide, two-layer deep neural network with the AntiNex Django dataset run the following steps.
+To train and predict with the new automated scaler-normalized dataset with a 99.8% prediction accuracy for detecting attacks using a wide, two-layer deep neural network with the `AntiNex Django dataset`_ run the following steps.
+
+.. _AntiNex Django dataset: https://github.com/jay-johnson/antinex-datasets
 
 Please make sure to clone the dataset repo to the pre-configured location:
 
