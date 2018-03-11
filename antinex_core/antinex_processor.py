@@ -212,44 +212,74 @@ class AntiNexProcessor:
         predictions = []
         res = antinex_utils.make_predictions.make_predictions(req)
         if res["status"] == SUCCESS:
+            log.info(("{} - processing results")
+                     .format(
+                        req["label"]))
             res_data = res["data"]
             model = res_data["model"]
             acc_data = res_data["acc"]
+            are_predictions_merged = res_data["are_predicts_merged"]
             predictions = res_data["sample_predictions"]
+
             accuracy = acc_data.get(
                 "accuracy",
                 None)
-            for idx, node in enumerate(predictions):
-                label_name = None
-                if "label_name" in node:
-                    label_name = node["label_name"]
-                org_feature = "_original_{}".format(
-                                predict_feature)
-                original_value = None
-                if org_feature in node:
-                    original_value = node[org_feature]
-                if "regression" in ml_type:
-                    log.info(("sample={} - {}={} predicted={}")
+            if are_predictions_merged:
+                log.info(("{} - processing merged predictions")
+                         .format(
+                            req["label"]))
+                merge_df = res_data["merge_df"]
+                model_predict_feature = "_predicted_{}".format(
+                    predict_feature)
+                if model_predict_feature not in merge_df:
+                    log.error(("{} missing predicted feature={} "
+                               "from res={}")
+                              .format(
+                                req["label"],
+                                model_predict_feature,
+                                res))
+                    return res
+
+                for idx, row in merge_df.iterrows():
+                    log.info(("cur_sample={} - {}={} predicted={}")
                              .format(
-                                node["_row_idx"],
-                                predict_feature,
-                                float(original_value),
-                                float(node[predict_feature])))
-                elif "classification" in ml_type:
-                    log.info(("sample={} - {}={} predicted={} label={}")
-                             .format(
-                                node["_row_idx"],
-                                predict_feature,
-                                original_value,
-                                node[predict_feature],
-                                label_name))
-                else:
-                    log.info(("sample={} - {}={} predicted={}")
-                             .format(
-                                node["_row_idx"],
-                                predict_feature,
-                                original_value,
-                                node[predict_feature]))
+                            idx,
+                            predict_feature,
+                            float(row[predict_feature]),
+                            float(row[model_predict_feature])))
+                # same as the merge method in antinex-utils
+            else:
+                for idx, node in enumerate(predictions):
+                    label_name = None
+                    if "label_name" in node:
+                        label_name = node["label_name"]
+                    org_feature = "_original_{}".format(
+                                    predict_feature)
+                    original_value = None
+                    if org_feature in node:
+                        original_value = node[org_feature]
+                    if "regression" in ml_type:
+                        log.info(("sample={} - {}={} predicted={}")
+                                 .format(
+                                    node["_row_idx"],
+                                    predict_feature,
+                                    float(original_value),
+                                    float(node[predict_feature])))
+                    elif "classification" in ml_type:
+                        log.info(("sample={} - {}={} predicted={} label={}")
+                                 .format(
+                                    node["_row_idx"],
+                                    predict_feature,
+                                    original_value,
+                                    node[predict_feature],
+                                    label_name))
+                    else:
+                        log.info(("sample={} - {}={} predicted={}")
+                                 .format(
+                                    node["_row_idx"],
+                                    predict_feature,
+                                    original_value,
+                                    node[predict_feature]))
             # end of predicting predictions
 
             if show_model_json:

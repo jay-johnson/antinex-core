@@ -332,6 +332,65 @@ class TestPredict(BaseTestCase):
             len(prc.models),
             max_models)
 
-    # end of test_predict_antinex_simple_success_retrain
+    # end of test_predict_antinex_simple_success_repredict
+
+    def test_scaler_predict_antinex_simple_success_repredict(self):
+
+        exchange = "webapp.predict.requests"
+        routing_key = "webapp.predict.requests"
+        queue = "webapp.predict.requests"
+        max_models = 1
+        prc = AntiNexProcessor(
+            max_models=max_models)
+
+        body = self.build_predict_scaler_antinex_request()
+        self.assertEqual(
+            body["ml_type"],
+            "classification")
+
+        message = MockMessage(
+            exchange=exchange,
+            routing_key=routing_key,
+            queue=queue)
+        self.assertEqual(
+            message.state,
+            "NOTRUN")
+        self.assertEqual(
+            message.get_exchange(),
+            exchange)
+        self.assertEqual(
+            message.get_routing_key(),
+            routing_key)
+        self.assertEqual(
+            message.get_queue(),
+            queue)
+
+        self.assertEqual(
+            len(prc.models),
+            0)
+        prc.handle_messages(
+            body=body,
+            message=message)
+        self.assertEqual(
+            message.state,
+            "ACK")
+        self.assertEqual(
+            len(prc.models),
+            max_models)
+
+        self.assertEqual(
+            len(prc.models),
+            1)
+        prc.handle_messages(
+            body=body,
+            message=message)
+        self.assertEqual(
+            message.state,
+            "ACK")
+        self.assertEqual(
+            len(prc.models),
+            max_models)
+
+    # end of test_scaler_predict_antinex_simple_success_repredict
 
 # end of TestPredict

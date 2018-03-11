@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(description=("Launch a Predict Dataset "
 parser.add_argument(
     "-f",
     help=("request json file to use default: "
-          "./training/regression.json"),
+          "./training/scaler-regression.json"),
     required=False,
     dest="request_file")
 parser.add_argument(
@@ -31,7 +31,7 @@ log = build_colorized_logger(name=name)
 
 log.info("{} - start".format(name))
 
-request_file = "./training/regression.json"
+request_file = "./training/scaler-regression.json"
 if args.request_file:
     request_file = args.request_file
 

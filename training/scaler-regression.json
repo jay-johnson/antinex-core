@@ -1,15 +1,16 @@
 {
     "label": "Close-Regression",
     "dataset": "./tests/datasets/regression/stock.csv",
+    "apply_scaler": true,
     "ml_type": "regression",
     "predict_feature": "close",
     "features_to_process": [
         "high",
         "low",
-        "open"
+        "open",
+        "volume"
     ],
     "ignore_features": [
-        "volume"
     ],
     "sort_values": [
     ],

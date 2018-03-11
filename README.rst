@@ -1,7 +1,14 @@
 AntiNex Core
 ============
 
-A Celery worker pool for processing training and prediction requests for deep neural networks to detect network exploits using Keras and Tensorflow in near real-time. Internally each worker manages a buffer of pre-trained models identified by the ``label`` from the initial training request. Once trained, a model can be used for rapid prediction testing provided the same ``label`` name is used on the prediction request. Models can also be re-trained by using the training api with the same ``label``.
+Automating network exploit detection using highly accurate pre-trained deep neural networks.
+
+As of 2018-03-11, the core can repeatedly predict attacks on a Django application server by training using the Django AntiNex dataset with cross validation scores around **~99.8%** with automated scaler normalization.
+
+Concepts
+--------
+
+The core is a Celery worker pool for processing training and prediction requests for deep neural networks to detect network exploits (Nex) using Keras and Tensorflow in near real-time. Internally each worker manages a buffer of pre-trained models identified by the ``label`` from the initial training request. Once trained, a model can be used for rapid prediction testing provided the same ``label`` name is used on the prediction request. Models can also be re-trained by using the training api with the same ``label``. While the initial focus is on network exploits, the repository also includes mock stock data for demonstrating running a worker pool to quickly predict regression data (like stock prices) with many, pre-trained deep neural networks.
 
 This repository is a standalone training and prediction worker pool that is decoupled from the AntiNex REST API:
 
@@ -37,9 +44,37 @@ Or with celery:
 Publish a Predict Request
 -------------------------
 
+To train and predict with the new automated scaler-normalized dataset with a 99.8% prediction accuracy for detecting attacks using a wide, two-layer deep neural network with the AntiNex Django dataset run the following steps.
+
+Please make sure to clone the dataset repo to the pre-configured location:
+
 ::
 
-    ./publish_predict_request.py
+    git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
+
+::
+
+    ./publish_regression_predict.py -f training/scaler-full-django-antinex-simple.json
+
+    2018-03-11 00:46:58,352 - antinex-prc - INFO - sample=30189 - label_value=1.0 predicted=1 label=attack
+    2018-03-11 00:46:58,352 - antinex-prc - INFO - sample=30190 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,352 - antinex-prc - INFO - sample=30191 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30192 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30193 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30194 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30195 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30196 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30197 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30198 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - sample=30199 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 00:46:58,353 - antinex-prc - INFO - Full-Django-AntiNex-Simple-DNN made predictions=30200 found=30200 accuracy=99.84271523178808
+    2018-03-11 00:46:58,354 - antinex-prc - INFO - Full-Django-AntiNex-Simple-DNN - saving model=full-django-antinex-simple-dnn
+
+If you do not have the datasets cloned locally, then you can use the included minimized dataset from the repo:
+
+::
+
+    ./publish_predict_request.py -f training/scaler-django-antinex-simple.json
 
 Publish a Train Request
 -----------------------
@@ -65,6 +100,7 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
     {
         "label": "Django-AntiNex-Simple-DNN",
         "dataset": "./tests/datasets/classification/cleaned_attack_scans.csv",
+        "apply_scaler": true,
         "ml_type": "classification",
         "predict_feature": "label_value",
         "features_to_process": [
@@ -109,30 +145,6 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
                     "activation": "relu"
                 },
                 {
-                    "layer_type": "dropout",
-                    "rate": 0.1
-                },
-                {
-                    "num_neurons": 200,
-                    "init": "uniform",
-                    "activation": "relu"
-                },
-                {
-                    "num_neurons": 150,
-                    "init": "uniform",
-                    "activation": "relu"
-                },
-                {
-                    "num_neurons": 100,
-                    "init": "uniform",
-                    "activation": "relu"
-                },
-                {
-                    "num_neurons": 50,
-                    "init": "uniform",
-                    "activation": "relu"
-                },
-                {
                     "num_neurons": 1,
                     "init": "uniform",
                     "activation": "sigmoid"
@@ -142,9 +154,11 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
         "label_rules": {
             "labels": [
                 "not_attack",
+                "not_attack",
                 "attack"
             ],
             "label_values": [
+                -1,
                 0,
                 1
             ]
@@ -159,15 +173,16 @@ Regression prediction tasks are also supported, and here is an example from an i
     {
         "label": "Close-Regression",
         "dataset": "./tests/datasets/regression/stock.csv",
+        "apply_scaler": true,
         "ml_type": "regression",
         "predict_feature": "close",
         "features_to_process": [
             "high",
             "low",
-            "open"
+            "open",
+            "volume"
         ],
         "ignore_features": [
-            "volume"
         ],
         "sort_values": [
         ],
@@ -186,41 +201,7 @@ Regression prediction tasks are also supported, and here is an example from an i
                 {
                     "activation": "relu",
                     "init": "uniform",
-                    "num_neurons": 500
-                },
-                {
-                    "layer_type": "dropout",
-                    "rate": 0.1
-                },
-                {
-                    "activation": "relu",
-                    "init": "uniform",
-                    "num_neurons": 500
-                },
-                {
-                    "activation": "relu",
-                    "init": "uniform",
-                    "num_neurons": 400
-                },
-                {
-                    "activation": "relu",
-                    "init": "uniform",
-                    "num_neurons": 300
-                },
-                {
-                    "activation": "relu",
-                    "init": "uniform",
                     "num_neurons": 200
-                },
-                {
-                    "activation": "relu",
-                    "init": "uniform",
-                    "num_neurons": 100
-                },
-                {
-                    "activation": "relu",
-                    "init": "uniform",
-                    "num_neurons": 50
                 },
                 {
                     "activation": null,

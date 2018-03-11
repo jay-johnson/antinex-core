@@ -54,6 +54,7 @@ install_requires = [
     "tables",
     "tensorflow",
     "tox",
+    "tqdm",
     "unittest2",
     "mock"
 ]
@@ -71,7 +72,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.1",
+    version="1.0.2",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "

@@ -52,6 +52,12 @@ def build_response_data(
     cm = req.get(
         "test_cm",
         None)
+    predicts_merged = req.get(
+        "test_predicts_merged",
+        False)
+    merge_df = req.get(
+        "test_merge_df",
+        None)
     data = {
         "predictions": predictions,
         "rounded_predictions": rounded,
@@ -64,6 +70,8 @@ def build_response_data(
         "model": model,
         "indexes": indexes,
         "confusion_matrix": cm,
+        "are_predicts_merged": predicts_merged,
+        "merge_df": merge_df,
         "err": error
     }
     return data

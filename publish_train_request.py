@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(description=("Launch a Train "
 parser.add_argument(
     "-f",
     help=("request json file to use default: "
-          "./training/django-antinex-simple.json"),
+          "./training/scaler-django-antinex-simple.json"),
     required=False,
     dest="request_file")
 parser.add_argument(
@@ -31,7 +31,7 @@ log = build_colorized_logger(name=name)
 
 log.info("{} - start".format(name))
 
-request_file = "./training/django-antinex-simple.json"
+request_file = "./training/scaler-django-antinex-simple.json"
 if args.request_file:
     request_file = args.request_file
 
