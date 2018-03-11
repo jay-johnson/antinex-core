@@ -100,7 +100,7 @@ The AntiNex core manages a pool of workers that are subscribed to process tasks 
 ::
 
     {
-        "label": "Django-AntiNex-Simple-DNN",
+        "label": "Django-AntiNex-Simple-Scaler-DNN",
         "dataset": "./tests/datasets/classification/cleaned_attack_scans.csv",
         "apply_scaler": true,
         "ml_type": "classification",
@@ -173,7 +173,7 @@ Regression prediction tasks are also supported, and here is an example from an i
 ::
 
     {
-        "label": "Close-Regression",
+        "label": "Scaler-Close-Regression",
         "dataset": "./tests/datasets/regression/stock.csv",
         "apply_scaler": true,
         "ml_type": "regression",
