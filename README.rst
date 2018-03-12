@@ -3,9 +3,11 @@ AntiNex Core
 
 Automating network exploit detection using highly accurate pre-trained deep neural networks.
 
-As of 2018-03-11, the core can repeatedly predict attacks on a Django application server by training using the Django AntiNex dataset with cross validation scores around **~99.8%** with automated scaler normalization.
+As of 2018-03-12, the core can repeatedly predict attacks on Django, Flask, React + Redux, Vue, and Spring application servers by training using the pre-recorded `AntiNex datasets`_ with cross validation scores above **~99.8%** with automated scaler normalization.
 
-Concepts
+.. _AntiNex datasets: https://github.com/jay-johnson/antinex-datasets
+
+Overview
 --------
 
 The core is a Celery worker pool for processing training and prediction requests for deep neural networks to detect network exploits (Nex) using Keras and Tensorflow in near real-time. Internally each worker manages a buffer of pre-trained models identified by the ``label`` from the initial training request. Once trained, a model can be used for rapid prediction testing provided the same ``label`` name is used on the prediction request. Models can also be re-trained by using the training api with the same ``label``. While the initial focus is on network exploits, the repository also includes mock stock data for demonstrating running a worker pool to quickly predict regression data (like stock prices) with many, pre-trained deep neural networks.
@@ -44,9 +46,12 @@ Or with celery:
 Publish a Predict Request
 -------------------------
 
-To train and predict with the new automated scaler-normalized dataset with a 99.8% prediction accuracy for detecting attacks using a wide, two-layer deep neural network with the `AntiNex Django dataset`_ run the following steps.
+To train and predict with the new automated scaler-normalized dataset with a 99.8% prediction accuracy for detecting attacks using a wide, two-layer deep neural network with the `AntiNex datasets`_ run the following steps.
 
-.. _AntiNex Django dataset: https://github.com/jay-johnson/antinex-datasets
+.. _AntiNex datasets: https://github.com/jay-johnson/antinex-datasets
+
+Clone
+-----
 
 Please make sure to clone the dataset repo to the pre-configured location:
 
@@ -54,25 +59,73 @@ Please make sure to clone the dataset repo to the pre-configured location:
 
     git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
 
-Predict
+Django - Train and Predict
+--------------------------
 
 ::
 
     ./publish_predict_request.py -f training/scaler-full-django-antinex-simple.json
 
-    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30189 - label_value=1.0 predicted=1 label=attack
-    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30190 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30191 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,175 - antinex-prc - INFO - sample=30192 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30193 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30194 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30195 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30196 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,176 - antinex-prc - INFO - sample=30197 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,177 - antinex-prc - INFO - sample=30198 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,177 - antinex-prc - INFO - sample=30199 - label_value=-1.0 predicted=0 label=not_attack
-    2018-03-11 09:14:38,177 - antinex-prc - INFO - Full-Django-AntiNex-Simple-Scaler-DNN made predictions=30200 found=30200 accuracy=99.84685430463577
-    2018-03-11 09:14:38,177 - antinex-prc - INFO - Full-Django-AntiNex-Simple-Scaler-DNN - saving model=full-django-antinex-simple-scaler-dnn
+Flask - Train and Predict
+-------------------------
+
+::
+
+    ./publish_predict_request.py -f training/scaler-full-flask-antinex-simple.json
+
+React and Redux - Train and Predict
+-----------------------------------
+
+::
+
+    ./publish_predict_request.py -f training/scaler-full-react-redux-antinex-simple.json
+
+Vue - Train and Predict
+-----------------------
+
+::
+
+    ./publish_predict_request.py -f training/scaler-full-vue-antinex-simple.json
+
+Spring - Train and Predict
+--------------------------
+
+::
+
+    ./publish_predict_request.py -f training/scaler-full-spring-antinex-simple.json
+
+Accuracy and Prediction Report
+------------------------------
+
+After a few minutes the final report will be printed out like:
+
+::
+
+    2018-03-11 23:35:00,944 - antinex-prc - INFO - sample=30178 - label_value=1.0 predicted=1 label=attack
+    2018-03-11 23:35:00,944 - antinex-prc - INFO - sample=30179 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,944 - antinex-prc - INFO - sample=30180 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,944 - antinex-prc - INFO - sample=30181 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,944 - antinex-prc - INFO - sample=30182 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30183 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30184 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30185 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30186 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30187 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30188 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30189 - label_value=1.0 predicted=1 label=attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30190 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,945 - antinex-prc - INFO - sample=30191 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30192 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30193 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30194 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30195 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30196 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30197 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30198 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,946 - antinex-prc - INFO - sample=30199 - label_value=-1.0 predicted=-1 label=not_attack
+    2018-03-11 23:35:00,947 - antinex-prc - INFO - Full-Django-AntiNex-Simple-Scaler-DNN made predictions=30200 found=30200 accuracy=99.84685430463577
+    2018-03-11 23:35:00,947 - antinex-prc - INFO - Full-Django-AntiNex-Simple-Scaler-DNN - saving model=full-django-antinex-simple-scaler-dnn
+
 
 If you do not have the datasets cloned locally, you can use the included minimized dataset from the repo:
 
