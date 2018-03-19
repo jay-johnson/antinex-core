@@ -3,7 +3,7 @@
 import os
 import sys
 import json
-import numpy
+import numpy as np
 import pandas as pd
 from antinex_utils.log.setup_logging import build_colorized_logger
 from antinex_utils.consts import SUCCESS
@@ -17,17 +17,47 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix
-import matplotlib
-matplotlib.use("Agg")  # noqa
-import matplotlib.pyplot as plt  # noqa
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 name = "antinex-scaler-django"
 log = build_colorized_logger(name=name)
 
 
+# noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
+dataset = os.getenv(
+    "DATASET",
+    ("/opt/antinex-datasets/v1/webapps/"
+     "django/training-ready/v1_django_cleaned.csv"))
+model_backup_file = os.getenv(
+    "MODEL_BACKUP_FILE",
+    "/tmp/{}-full-model.h5".format(
+        name))
+model_weights_file = os.getenv(
+    "MODEL_WEIGHTS_FILE",
+    "/tmp/{}-weights.h5".format(
+        name))
+model_json_file = os.getenv(
+    "MODEL_JSON_FILE",
+    "/tmp/{}-model.json".format(
+        name))
+model_image_file = os.getenv(
+    "MODEL_IMAGE_FILE",
+    "/tmp/{}-predictions-vs-correct.png".format(
+        name))
+footnote_text = os.getenv(
+    "PLOT_FOOTNOTE",
+    "AntiNex v1")
+image_title = "{} - Predictions and Correct Predictions".format(
+    name)
+show_predictions = bool(os.getenv(
+    "SHOW_PREDICTIONS",
+    "1") == "1")
+
+
 seed = 42
-numpy.random.seed(seed)
+np.random.seed(seed)
 
 
 def build_model(
@@ -72,12 +102,6 @@ def build_model(
     return model
 # end of build_model
 
-
-# noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
-dataset = os.getenv(
-    "DATASET",
-    ("/opt/antinex-datasets/v1/webapps/"
-     "django/training-ready/v1_django_cleaned.csv"))
 
 features_to_process = [
     "idx",
@@ -391,7 +415,13 @@ for idx, row in predict_rows_df.iterrows():
         new_row["_original_{}".format(
                 predict_feature)] = \
             "missing-from-dataset"
+    if cur_value != int(row[predict_feature]):
+        new_row["prediction_status"] = 1
+    else:
+        new_row["prediction_status"] = 0
+
     new_row[predict_feature] = int(cur_value)
+
     if should_set_labels:
         new_row["label_name"] = \
             labels_dict[str(int(cur_value))]
@@ -408,15 +438,34 @@ log.info(("creating merged_predictions_df from sample_predictions={}")
 merged_predictions_df = pd.DataFrame(
     sample_predictions)
 
-for row_num, row in merged_predictions_df.iterrows():
-    log.info(("row={} original_{}={} predicted={}")
-             .format(
-                row_num,
-                predict_feature,
-                row["_original_{}".format(
-                    predict_feature)],
-                row[predict_feature]))
-# end seeing original vs predicted
+if show_predictions:
+    for row_num, row in merged_predictions_df.iterrows():
+        log.info(("row={} original_{}={} predicted={}")
+                 .format(
+                    row_num,
+                    predict_feature,
+                    row["_original_{}".format(
+                        predict_feature)],
+                    row[predict_feature]))
+    # end seeing original vs predicted
+# if showing all predictions to log
+
+log.debug("saving weights")
+
+# there are some known issues saving weights:
+# https://github.com/keras-team/keras/issues/4875
+model.model.save_weights(model_weights_file)
+
+log.debug("saving full keras model to file")
+
+model.model.save(model_backup_file)
+
+log.debug("saving keras model as json to file")
+
+with open(
+        model_json_file,
+        "w") as json_file:
+    json_file.write(model.model.to_json())
 
 log.info(("neural network created "
           "merged_predictions_df.index={} columns={} "
@@ -426,3 +475,129 @@ log.info(("neural network created "
             merged_predictions_df.columns.values,
             scores,
             accuracy.get("accuracy", None)))
+
+log.info(("saved model_backup_file={} "
+          "model_weights_file={} model_json_file={}")
+         .format(
+            model_backup_file,
+            model_weights_file,
+            model_json_file))
+
+sns.set(font="serif")
+sns.set_context(
+    "paper",
+    rc={
+        "font.size": 12,
+        "axes.titlesize": 12,
+        "axes.labelsize": 10})
+fig, ax = plt.subplots(
+    figsize=(15.0, 10.0))
+
+ax = sns.distplot(
+    merged_predictions_df["prediction_status"])
+
+ax.get_figure().text(
+    0.90,
+    0.01,
+    footnote_text,
+    va="bottom",
+    fontsize=8,
+    color="#888888")
+
+# More seaborn examples:
+
+# ax = sns.regplot(
+#     x=merged_predictions_df[predict_feature],
+#     y=merged_predictions_df["_original_{}".format(
+#         predict_feature)],
+#     marker="+")
+# ax.get_figure().text(
+#     0.90,
+#     0.01,
+#     footnote_text,
+#     va="bottom",
+#     fontsize=8,
+#     color="#888888")
+
+# g = sns.FacetGrid(
+#     data=merged_predictions_df[[
+#         predict_feature,
+#         "_original_{}".format(
+#             predict_feature)]],
+#     size=15.0,
+#     palette="Set2",
+#     col=predict_feature,
+#     hue=predict_feature)
+# g.map(
+#     sns.regplot,
+#     predict_feature,
+#     "_original_{}".format(
+#         predict_feature))
+# g.fig.suptitle(
+#     image_title)
+# g.fig.get_children()[-1].set_bbox_to_anchor(
+#     (1.1, 0.5, 0, 0))
+# g.fig.text(
+#    0.90,
+#    0.01,
+#    footnote_text,
+#    va="bottom",
+#    fontsize=8,
+#    color="#888888")
+
+# g = sns.pairplot(
+#    data=merged_predictions_df[[
+#        predict_feature,
+#        "_original_{}".format(
+#            predict_feature)]],
+#    diag_kind="kde")
+# g.fig.suptitle(
+#    image_title)
+# g.fig.text(
+#    0.90,
+#    0.01,
+#    footnote_text,
+#    va="bottom",
+#    fontsize=8,
+#    color="#888888")
+
+# sns.lmplot(
+#    x=predict_feature,
+#    y="_original_{}".format(
+#        predict_feature),
+#    hue=predict_feature,
+#    data=merged_predictions_df,
+#    markers=["o", "x"],
+#    palette="Set1")
+
+# g = sns.jointplot(
+#     x=predict_feature,
+#     y="_original_{}".format(
+#         predict_feature),
+#     data=merged_predictions_df,
+#     kind="reg")
+
+# g = sns.heatmap(
+#     merged_predictions_df[[
+#         predict_feature,
+#         "_original_{}".format(
+#             predict_feature)]].values.astype("int"),
+#     annot=True,
+#     annot_kws={
+#        "size": 16})
+
+# plt.show()
+ax.get_figure().savefig(
+    model_image_file)
+# fig.savefig(
+#    model_image_file)
+# g.fig.savefig(
+#    model_image_file)
+
+log.info(("saved model_backup_file={} model_weights_file={} "
+          "model_json_file={} image_file={}")
+         .format(
+            model_backup_file,
+            model_weights_file,
+            model_json_file,
+            model_image_file))
