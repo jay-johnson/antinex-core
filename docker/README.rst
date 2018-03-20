@@ -18,5 +18,6 @@ http://localhost:8888/notebooks/AntiNex-Protecting-Django.ipynb
 View Notebook Presentation Slides
 ---------------------------------
 
-http://localhost:8889/Slides-AntiNex-Protecting-Django.slides.html
+#.  Use ``Alt + r`` inside the notebook
 
+#.  Use the non-vertical scolling url: http://localhost:8889/Slides-AntiNex-Protecting-Django.slides.html

@@ -19,8 +19,8 @@ services:
       - ./jupyter:/root/.jupyter
       - ./data:/data
     # start another process:
+    entrypoint: "/root/.jupyter/start-container.sh"
     # entrypoint: "/opt/antinex-core/run-antinex-core.sh"
-    # entrypoint: "/root/.jupyter/start-container.sh"
     # entrypoint: "jupyter notebook --ip=* --port=8888 \
     #              --no-browser \
     #              --config=/root/.jupyter/jupyter_notebook_config.py \
