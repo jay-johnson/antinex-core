@@ -33,7 +33,7 @@ If you want to generate images please install ``python3-tk`` on Ubuntu.
 Docker
 ------
 
-Start the container with Jupyter and JupyterLab with:
+Start the container for browsing with Jupyter:
 
 ::
 
