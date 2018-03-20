@@ -9,7 +9,7 @@ services:
     environment:
       - JUPYTER_PASS=admin
       - SHARED_DIR=/data
-      - BROKER_URL=redis://localhost:6379/6
+      - BROKER_URL=redis://redis:6379/6
     ports:
       - "8888:8888"
       - "8889:8889"
