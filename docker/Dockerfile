@@ -14,31 +14,31 @@ RUN apt-get update \
     autoconf \
     build-essential \
     software-properties-common \
-  	git \
-	vim \
- 	python3 \
-	python3-dev \
-	python-setuptools \
-	python-virtualenv \
-	python-pip \
-  	openssl \
-	libssl-dev \
-  	cmake \
-	autoconf \
-	libffi6 \
-	libffi-dev \
-	unzip
+    git \
+    vim \
+    python3 \
+    python3-dev \
+    python-setuptools \
+    python-virtualenv \
+    python-pip \
+    openssl \
+    libssl-dev \
+    cmake \
+    autoconf \
+    libffi6 \
+    libffi-dev \
+    unzip
 
 RUN echo "installing pips" \
   && pip3.6 list \
   && /usr/local/bin/pip3.6 install --upgrade \
-	requests \
-	seaborn \
-	pip \
-	RISE \
-	vega \
-	jupyter \
-	jupyterlab
+    requests \
+    seaborn \
+    pip \
+    RISE \
+    vega \
+    jupyter \
+    jupyterlab
 
 RUN echo "installing pips" \
   && /usr/local/bin/pip3.6 list --format=columns \
