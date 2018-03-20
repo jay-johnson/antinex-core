@@ -229,13 +229,13 @@ if "labels" in label_rules and "label_values" in label_rules:
             should_set_labels = True
             labels_dict[str(lidx)] = \
                 label_rules["labels"][idx]
-
 # end of compiling labels dictionary
 
 
 # define a function with no arguments for Keras Scikit-Learn API to work
 # https://keras.io/scikit-learn-api/
 def set_model():
+    """set_model"""
     return build_model(
         num_features=num_features,
         loss=loss,
@@ -361,7 +361,7 @@ log.info(("classification accuracy={} samples={}")
             accuracy["accuracy"],
             num_samples))
 
-# end of if use existing or new model
+# make predictions
 predictions = model.predict(
     sample_rows.values,
     verbose=verbose)

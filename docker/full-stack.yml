@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+
+  ai-core:
+    container_name: ai-core
+    image: jayjohnson/ai-core:latest
+    hostname: ai-core
+    environment:
+      - JUPYTER_PASS=admin
+      - SHARED_DIR=/data
+      - BROKER_URL=redis://localhost:6379/6
+    ports:
+      - "8888:8888"
+      - "8889:8889"
+      - "6006:6006"
+    volumes:
+      - ./notebooks:/root/notebooks
+      - ./jupyter:/root/.jupyter
+      - ./data:/data
+    # start another process:
+    # entrypoint: "/opt/antinex-core/run-antinex-core.sh"
+    # entrypoint: "/root/.jupyter/start-container.sh"
+    # entrypoint: "jupyter notebook --ip=* --port=8888 \
+    #              --no-browser \
+    #              --config=/root/.jupyter/jupyter_notebook_config.py \
+    #              --notebook-dir=/root/notebooks --allow-root"
+
+  # Redis
+  redis:
+    container_name: "redis"
+    hostname: redis
+    image: redis:4.0.5-alpine
+    network_mode: "host"
+    ports:
+      - "6379:6379"

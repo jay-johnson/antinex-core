@@ -130,3 +130,5 @@ py3venv
 
 nohup.out
 .pytest_cache
+docker/jupyter/migrated
+docker/notebooks/.ipynb_checkpoints
