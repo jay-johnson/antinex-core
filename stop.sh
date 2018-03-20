@@ -2,7 +2,7 @@
 
 cd docker
 echo ""
-echo "starting full-stack"
+echo "stopping full-stack"
 echo ""
 docker-compose -f ./full-stack.yml stop
 
