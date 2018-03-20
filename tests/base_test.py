@@ -201,6 +201,43 @@ class BaseTestCase(unittest.TestCase):
         return body
     # end of build_predict_scaler_antinex_request
 
+    def build_predict_rows_from_dataset(
+            self,
+            data_file=("./training/"
+                       "scaler-django-antinex-simple.json"),
+            num_rows_at_bottom=2):
+        """build_model_and_weights
+
+        :param data_file: predict request
+        """
+        body = {}
+        with open(data_file, "r") as cur_file:
+            file_contents = cur_file.read()
+            body = json.loads(file_contents)
+
+        # Now send:
+        now = datetime.datetime.now().isoformat()
+        body["created"] = now
+        log.info("loading predict_rows")
+        predict_rows_df = pd.read_csv(body["dataset"])
+        predict_rows = []
+        use_start_idx = num_rows_at_bottom
+        if use_start_idx > 0:
+            use_start_idx = -1 * use_start_idx
+        for idx, org_row in predict_rows_df.iloc[use_start_idx:].iterrows():
+            new_row = json.loads(org_row.to_json())
+            new_row["idx"] = len(predict_rows) + 1
+            new_row["_dataset_index"] = idx
+            predict_rows.append(new_row)
+        body["predict_rows"] = pd.DataFrame(predict_rows).to_json()
+
+        log.info(("using predict_rows={}")
+                 .format(
+                    len(predict_rows)))
+
+        return body
+    # end of build_predict_rows_from_dataset
+
     def build_regression_train_request(
             self,
             data_file=("./tests/train/"

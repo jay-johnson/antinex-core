@@ -73,7 +73,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.7",
+    version="1.0.8",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
@@ -101,6 +101,7 @@ setup(
         "./publish_predict_request.py",
         "./antinex_core/scripts/antinex-scaler-django.py",
         "./antinex_core/scripts/standalone-scaler-django.py",
+        "./antinex_core/scripts/convert-bottom-rows-to-json.py",
         "./publish_regression_predict.py"
     ],
     use_2to3=True,

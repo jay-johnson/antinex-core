@@ -85,12 +85,20 @@ else:
     body = req_data
     body["created"] = now
     log.info("loading predict_rows")
-    predict_rows_df = pd.read_csv(req_data["dataset"])
     predict_rows = []
-    for idx, org_row in predict_rows_df.iterrows():
-        new_row = json.loads(org_row.to_json())
-        new_row["idx"] = len(predict_rows) + 1
-        predict_rows.append(new_row)
+    dataset = req_data.get(
+        "dataset",
+        None)
+    if dataset:
+        predict_rows_df = pd.read_csv(req_data["dataset"])
+        for idx, org_row in predict_rows_df.iterrows():
+            new_row = json.loads(org_row.to_json())
+            new_row["idx"] = len(predict_rows) + 1
+            predict_rows.append(new_row)
+    else:
+        predict_rows = req_data["predict_rows"]
+    # is this a couple prediction rows or a full dataset
+
     body["predict_rows"] = pd.DataFrame(predict_rows).to_json()
 
     log.info(("using predict_rows={}")
