@@ -74,7 +74,10 @@ RUN echo "" >> /home/runner/.bashrc \
   && echo "alias ds='cd /opt/antinex-datasets'" >> /home/runner/.bashrc \
   && echo "alias ut='cd /opt/antinex-utils'" >> /home/runner/.bashrc \
   && echo "alias vi='/usr/bin/vim'" >> /home/runner/.bashrc \
-  && echo "" >> /home/runner/.bashrc
+  && echo "" >> /home/runner/.bashrc \
+  && mkdir ~/.pip \
+  && echo "[list]" >> ~/.pip/pip.conf \
+  && echo "format=columns" >> ~/.pip/pip.conf
 
 RUN echo "cloning repos" \
   && ls -l /opt \
