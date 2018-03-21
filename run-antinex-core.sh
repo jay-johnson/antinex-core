@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -e "/home/$(whoami)/.venvs/venvdrfpipeline/bin/activate" ]]; then
+    source /home/$(whoami)/.venvs/venvdrfpipeline/bin/activate
+    pip list
+fi
+
 echo ""
 echo "Loading Celery environment variables"
 echo ""
