@@ -33,6 +33,7 @@ RUN apt-get update \
 
 RUN echo "creating directories" \
   && mkdir -p -m 777 /opt \
+  && mkdir -p -m 777 /data \
   && chmod 777 /opt \
   && mkdir -p -m 777 /opt/venvs \
   && mkdir -p -m 777 /opt/shared \
@@ -78,9 +79,9 @@ RUN echo "" >> /home/runner/.bashrc \
 RUN echo "cloning repos" \
   && ls -l /opt \
   && ls -l / \
-  && git clone https://github.com/jay-johnson/train-ai-with-django-swagger-jwt /opt/antinex-api \
   && git clone https://github.com/jay-johnson/antinex-utils.git /opt/antinex-utils \
   && git clone https://github.com/jay-johnson/antinex-core.git /opt/antinex-core \
+  && git clone https://github.com/jay-johnson/train-ai-with-django-swagger-jwt /opt/antinex-api \
   && git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets \
   && chmod 775 /opt/antinex-api /opt/antinex-utils /opt/antinex-core /opt/antinex-datasets
 
