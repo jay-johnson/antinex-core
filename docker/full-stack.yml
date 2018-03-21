@@ -16,16 +16,18 @@ services:
       - "8889:8889"
       - "6006:6006"
     volumes:
-      - ./notebooks:/root/notebooks
-      - ./jupyter:/root/.jupyter
       - ./data:/data
+      - ./jupyter/start-container.sh:/home/runner/.jupyter/start-container.sh
+    # for sharing inside the container
+    # - ./notebooks:/home/runner/notebooks
+    # - ./jupyter:/home/runner/.jupyter
     # start another process:
-    entrypoint: "/root/.jupyter/start-container.sh"
+    entrypoint: "/home/runner/.jupyter/start-container.sh"
     # entrypoint: "/opt/antinex-core/run-antinex-core.sh"
     # entrypoint: "jupyter notebook --ip=* --port=8888 \
     #              --no-browser \
-    #              --config=/root/.jupyter/jupyter_notebook_config.py \
-    #              --notebook-dir=/root/notebooks --allow-root"
+    #              --config=/home/runner/.jupyter/jupyter_notebook_config.py \
+    #              --notebook-dir=/home/runner/notebooks --allow-root"
 
   # Redis
   redis:

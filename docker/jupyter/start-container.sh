@@ -1,13 +1,18 @@
 #!/bin/bash
 
-host_as_slides="/root/notebooks/Slides-AntiNex-Protecting-Django.ipynb"
+user_dir="/home/runner"
+source $user_dir/.venvs/venvdrfpipeline/bin/activate
+
+pip list --format=columns
+
+host_as_slides="/home/runner/notebooks/Slides-AntiNex-Protecting-Django.ipynb"
 if [[ "${SLIDE_NOTEBOOK}" != "" ]]; then
     host_as_slides="${SLIDE_NOTEBOOK}"
 fi
 
 if [[ -e ${host_as_slides} ]]; then
     echo "hosting notebook: ${host_as_slides} as slides"
-    nohup python /usr/local/bin/jupyter-nbconvert \
+    nohup $user_dir/.venvs/venvdrfpipeline/bin/jupyter-nbconvert \
         --to slides \
         --ServePostProcessor.port=8889 \
         --ServePostProcessor.ip="0.0.0.0" \
@@ -21,7 +26,7 @@ fi
 echo "Starting Jupyter"
 jupyter notebook --ip=* --port=8888 \
     --no-browser \
-    --config=/root/.jupyter/jupyter_notebook_config.py \
-    --notebook-dir=/root/notebooks --allow-root
+    --config=/home/runner/.jupyter/jupyter_notebook_config.py \
+    --notebook-dir=/home/runner/notebooks --allow-root
 
 exit 0

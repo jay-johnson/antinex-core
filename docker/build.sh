@@ -6,12 +6,6 @@ imagename=ai-core
 cd ..
 tag=$(cat setup.py | grep "version=" | sed -e 's/"/ /g' | awk '{print $2}')
 
-rm -f ${imagename}-*.tgz
-include_these="antinex_core tests README.rst setup.cfg setup.py tox.ini publish_predict_request.py publish_regression_predict.py publish_train_request.py run-antinex-core.sh training LICENSE ./docker/jupyter ./docker/notebooks ./docker/data"
-echo "Creating src build tar for tag=${tag} including=${include_these}"
-tar zcvf ${imagename}-${tag}.tgz ${include_these}
-cp ${imagename}-${tag}.tgz docker/${imagename}-latest.tgz
-
 echo ""
 echo "--------------------------------------------------------"
 echo "Building new Docker image(${maintainer}/${imagename})"
