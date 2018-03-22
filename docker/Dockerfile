@@ -82,6 +82,8 @@ RUN echo "" >> /home/runner/.bashrc \
 RUN echo "cloning repos" \
   && ls -l /opt \
   && ls -l / \
+  && git clone https://github.com/jay-johnson/network-pipeline-datasets.git /opt/datasets \
+  && git clone https://github.com/jay-johnson/network-pipeline.git /opt/antinex-pipeline \
   && git clone https://github.com/jay-johnson/antinex-utils.git /opt/antinex-utils \
   && git clone https://github.com/jay-johnson/antinex-core.git /opt/antinex-core \
   && git clone https://github.com/jay-johnson/train-ai-with-django-swagger-jwt /opt/antinex-api \
@@ -93,6 +95,11 @@ RUN cd /opt/antinex-api \
   && ls -l /opt/antinex-core \
   && ls -l /opt/antinex-utils \
   && ls -l /opt/antinex-datasets
+
+RUN echo "installing pipeline" \
+  && . ~/.venvs/venvdrfpipeline/bin/activate \
+  && cd /opt/antinex-pipeline \
+  && pip install --upgrade -e .
 
 RUN echo "installing utils" \
   && . ~/.venvs/venvdrfpipeline/bin/activate \
@@ -155,6 +162,7 @@ RUN ls /opt/antinex-core/ \
   && chmod 777 /opt/antinex-core/docker/jupyter/start-container.sh \
   && chmod 777 /opt/antinex-core/run-antinex-core.sh
 
+ENV PIPELINE_PROCESSOR_SCRIPT /opt/antinex-pipeline/network_pipeline/scripts/packets-redis.py
 ENV JUPYTER_START_SCRIPT /opt/antinex-core/docker/jupyter/start-container.sh
 ENV NO_DB_WORKER_START_SCRIPT /opt/antinex-core/run-antinex-core.sh
 ENV LOG_CFG /opt/antinex-core/antinex_core/log/colors-logging.json
