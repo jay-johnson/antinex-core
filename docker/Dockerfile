@@ -89,7 +89,12 @@ RUN echo "cloning repos" \
   && git clone https://github.com/jay-johnson/train-ai-with-django-swagger-jwt /opt/antinex-api \
   && git clone https://github.com/jay-johnson/antinex-client.git /opt/antinex-client \
   && git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets \
-  && chmod 775 /opt/antinex-api /opt/antinex-utils /opt/antinex-core /opt/antinex-datasets
+  && chmod 775 \
+    /opt/antinex-api \
+    /opt/antinex-utils \
+    /opt/antinex-core \
+    /opt/antinex-datasets \
+    /opt/antinex-client
 
 RUN cd /opt/antinex-api \
   && ls -l /opt/antinex-api \
