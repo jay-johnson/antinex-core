@@ -87,6 +87,7 @@ RUN echo "cloning repos" \
   && git clone https://github.com/jay-johnson/antinex-utils.git /opt/antinex-utils \
   && git clone https://github.com/jay-johnson/antinex-core.git /opt/antinex-core \
   && git clone https://github.com/jay-johnson/train-ai-with-django-swagger-jwt /opt/antinex-api \
+  && git clone https://github.com/jay-johnson/antinex-client.git /opt/antinex-client \
   && git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets \
   && chmod 775 /opt/antinex-api /opt/antinex-utils /opt/antinex-core /opt/antinex-datasets
 
@@ -94,16 +95,17 @@ RUN cd /opt/antinex-api \
   && ls -l /opt/antinex-api \
   && ls -l /opt/antinex-core \
   && ls -l /opt/antinex-utils \
+  && ls -l /opt/antinex-client \
   && ls -l /opt/antinex-datasets
-
-RUN echo "installing pipeline" \
-  && . ~/.venvs/venvdrfpipeline/bin/activate \
-  && cd /opt/antinex-pipeline \
-  && pip install --upgrade -e .
 
 RUN echo "installing utils" \
   && . ~/.venvs/venvdrfpipeline/bin/activate \
   && cd /opt/antinex-utils \
+  && pip install --upgrade -e .
+
+RUN echo "installing pipeline" \
+  && . ~/.venvs/venvdrfpipeline/bin/activate \
+  && cd /opt/antinex-pipeline \
   && pip install --upgrade -e .
 
 RUN echo "installing core" \
@@ -115,6 +117,11 @@ RUN echo "installing api" \
   && . ~/.venvs/venvdrfpipeline/bin/activate \
   && cd /opt/antinex-api \
   && pip install --upgrade -r /opt/antinex-api/requirements.txt
+
+RUN echo "installing client" \
+  && . ~/.venvs/venvdrfpipeline/bin/activate \
+  && cd /opt/antinex-client \
+  && pip install --upgrade -e .
 
 RUN echo "installing jupyter pips" \
   && . ~/.venvs/venvdrfpipeline/bin/activate \

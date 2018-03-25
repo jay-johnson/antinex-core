@@ -1,10 +1,11 @@
 import datetime
 import json
 import pandas as pd
+import antinex_utils.make_predictions
 from antinex_core.log.setup_logging import build_colorized_logger
 from antinex_utils.utils import ppj
 from antinex_utils.consts import SUCCESS
-import antinex_utils.make_predictions
+from antinex_core.send_results_to_broker import send_results_to_broker
 
 
 name = "antinex-prc"
@@ -195,6 +196,17 @@ class AntiNexProcessor:
                  .format(
                     req["use_model_name"]))
 
+        # the REST API can ask for the worker to publish
+        # results to the broker details from the manifest
+        # which is stored in the REST API db
+        worker_result_node = None
+        if "manifest" in req:
+            worker_result_node = req["manifest"].get(
+                "worker_result_node",
+                None)
+        # end of getting 'where to send the results' from
+        # the manifest
+
         predict_df = pd.read_json(req["predict_rows"])
         show_model_json = False
         try:
@@ -297,15 +309,34 @@ class AntiNexProcessor:
                         len(res_data["sample_predictions"]),
                         accuracy))
 
-            log.info(("{} - saving model={}")
+            final_results = {
+                "data": res_data,
+                "created": datetime.datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S")
+            }
+
+            if worker_result_node:
+
+                log.info(("CORERES {} publishing results back to api")
+                         .format(
+                            req["label"]))
+
+                status = send_results_to_broker(
+                    loc=worker_result_node,
+                    final_results=final_results)
+
+                log.info(("CORERES {} publishing results success={}")
+                         .format(
+                            req["label"],
+                            bool(status == SUCCESS)))
+            # end of sending the results back
+
+            log.info(("{} - model={} finished processing")
                      .format(
                         req["label"],
                         req["use_model_name"]))
 
-            self.models[req["use_model_name"]] = {
-                "data": res_data,
-                "created": datetime.datetime.now()
-            }
+            self.models[req["use_model_name"]] = final_results
         else:
             log.info(("{} failed predictions={}")
                      .format(
