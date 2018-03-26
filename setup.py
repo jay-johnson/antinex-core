@@ -102,6 +102,7 @@ setup(
         "./antinex_core/scripts/antinex-scaler-django.py",
         "./antinex_core/scripts/standalone-scaler-django.py",
         "./antinex_core/scripts/convert-bottom-rows-to-json.py",
+        "./antinex_core/scripts/update-repos-in-container.sh",
         "./publish_regression_predict.py"
     ],
     use_2to3=True,

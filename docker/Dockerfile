@@ -94,9 +94,10 @@ RUN echo "cloning repos" \
     /opt/antinex-utils \
     /opt/antinex-core \
     /opt/antinex-datasets \
-    /opt/antinex-client
+    /opt/antinex-client \
+    /opt/antinex-pipeline
 
-RUN cd /opt/antinex-api \
+RUN echo "checking repos in container" \
   && ls -l /opt/antinex-api \
   && ls -l /opt/antinex-core \
   && ls -l /opt/antinex-utils \
