@@ -5,6 +5,11 @@ Automating network exploit detection using highly accurate pre-trained deep neur
 
 As of 2018-03-12, the core can repeatedly predict attacks on Django, Flask, React + Redux, Vue, and Spring application servers by training using the pre-recorded `AntiNex datasets`_ with cross validation scores above **~99.8%** with automated scaler normalization.
 
+Accuracy + Training + Cross Validation in a Jupyter Notebook
+------------------------------------------------------------
+
+https://github.com/jay-johnson/antinex-core/blob/master/docker/notebooks/AntiNex-Protecting-Django.ipynb
+
 .. _AntiNex datasets: https://github.com/jay-johnson/antinex-datasets
 
 Overview
