@@ -24,6 +24,7 @@ def send_results_to_broker(
     """
 
     status = ERROR
+    conn = None
     org_model = None
     org_rounded = None
     org_train_scaler = None
@@ -77,7 +78,6 @@ def send_results_to_broker(
                     routing_key))
 
         try:
-            conn = None
             if len(ssl_options) > 0:
                 log.debug("connecting with ssl")
                 conn = Connection(
@@ -180,6 +180,9 @@ def send_results_to_broker(
     final_results["data"]["scaler_test"] = org_test_scaler
     final_results["data"]["scaled_train_dataset"] = org_train_scaler_dataset
     final_results["data"]["scaled_test_dataset"] = org_test_scaler_dataset
+
+    if conn:
+        conn.release()
 
     return status
 # end of send_results_to_broker
