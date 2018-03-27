@@ -1,9 +1,6 @@
 import json
 import pandas as pd
-from kombu import Connection
-from kombu import Producer
-from kombu import Exchange
-from kombu import Queue
+from celery import Celery
 from antinex_core.log.setup_logging import build_colorized_logger
 from antinex_utils.consts import SUCCESS
 from antinex_utils.consts import ERROR
@@ -24,7 +21,6 @@ def send_results_to_broker(
     """
 
     status = ERROR
-    conn = None
     org_model = None
     org_rounded = None
     org_train_scaler = None
@@ -62,95 +58,61 @@ def send_results_to_broker(
         source = loc["source"]
         auth_url = loc["auth_url"]
         ssl_options = loc["ssl_options"]
-        exchange = loc["exchange"]
-        exchange_type = loc["exchange_type"]
-        routing_key = loc["routing_key"]
-        queue = loc["queue"]
+        queue_name = loc["queue"]
+        task_name = loc["task_name"]
         delivery_mode = loc["delivery_mode"]
         manifest = loc["manifest"]
+        retries = loc.get(
+            "retries",
+            100000)
 
         log.debug(("CORERES - sending response back to source={} "
-                   "ssl={} exchange={} routing_key={}")
+                   "ssl={} queue={} task={}")
                   .format(
                     source,
                     ssl_options,
-                    exchange,
-                    routing_key))
+                    queue_name,
+                    task_name))
+
+        send_data_to_rest_api = {
+            "results": final_results,
+            "manifest": manifest
+        }
+
+        broker_settings = {
+            "broker_url": auth_url,
+            "broker_use_ssl": ssl_options
+        }
 
         try:
-            if len(ssl_options) > 0:
-                log.debug("connecting with ssl")
-                conn = Connection(
-                    auth_url,
-                    login_method="EXTERNAL",
-                    ssl=ssl_options)
-            else:
-                log.debug("connecting without ssl")
-                conn = Connection(
-                    auth_url)
-            # end of connecting
 
-            conn.connect()
+            app = Celery("core-publish-results")
 
-            log.debug("getting channel")
-            channel = conn.channel()
-
-            core_exchange = Exchange(
-                exchange,
-                type=exchange_type,
-                durable=True)
-
-            log.debug("creating producer")
-            producer = Producer(
-                channel=channel,
-                auto_declare=True,
-                serializer="json")
-
-            try:
-                log.debug("declaring exchange")
-                producer.declare()
-            except Exception as k:
-                log.error(("declare exchange failed with ex={}")
-                          .format(
-                            k))
-            # end of try to declare exchange which can fail if it exists
-
-            core_queue = Queue(
-                queue,
-                core_exchange,
-                routing_key=routing_key,
-                durable=True)
-
-            try:
-                log.debug("declaring queue")
-                core_queue.maybe_bind(conn)
-                core_queue.declare()
-            except Exception as k:
-                log.error(("declare queue={} routing_key={} failed with ex={}")
-                          .format(
-                            queue,
-                            routing_key,
-                            k))
-            # end of try to declare queue which can fail if it exists
-
-            log.info(("publishing exchange={} routing_key={} persist={}")
+            log.info(("creating celery app auth={} ssl={}")
                      .format(
-                        core_exchange.name,
-                        routing_key,
-                        delivery_mode))
+                        auth_url,
+                        ssl_options))
 
-            send_data_to_rest_api = {
-                "results": final_results,
-                "manifest": manifest
-            }
+            app.conf.update(
+                **broker_settings)
 
-            producer.publish(
-                body=send_data_to_rest_api,
-                exchange=core_exchange.name,
-                routing_key=routing_key,
-                auto_declare=True,
-                serializer="json",
-                delivery_mode=delivery_mode)
+            # Celery task routing and queue
+            log.info(("sending response queue={} task={} retries={}")
+                     .format(
+                        queue_name,
+                        task_name,
+                        retries))
+
+            task_id = app.send_task(
+                task_name,
+                args=[send_data_to_rest_api],
+                queue=queue_name,
+                delivery_mode=delivery_mode,
+                retries=retries)
+
+            log.info(("task.id={}")
+                     .format(
+                        task_id))
 
         except Exception as e:
             log.info(("Failed to publish to core req={} with ex={}")
@@ -180,9 +142,6 @@ def send_results_to_broker(
     final_results["data"]["scaler_test"] = org_test_scaler
     final_results["data"]["scaled_train_dataset"] = org_train_scaler_dataset
     final_results["data"]["scaled_test_dataset"] = org_test_scaler_dataset
-
-    if conn:
-        conn.release()
 
     return status
 # end of send_results_to_broker
