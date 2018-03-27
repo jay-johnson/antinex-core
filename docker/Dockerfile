@@ -90,6 +90,7 @@ RUN echo "cloning repos" \
   && git clone https://github.com/jay-johnson/antinex-client.git /opt/antinex-client \
   && git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets \
   && chmod 775 \
+    /opt/datasets \
     /opt/antinex-api \
     /opt/antinex-utils \
     /opt/antinex-core \
