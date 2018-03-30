@@ -125,6 +125,15 @@ RUN echo "installing api" \
   && cd /opt/antinex-api \
   && pip install --upgrade -r /opt/antinex-api/requirements.txt
 
+RUN echo "building docs" \
+  && . ~/.venvs/venvdrfpipeline/bin/activate \
+  && . /opt/antinex-api/envs/drf-dev.env \
+  && cd /opt/antinex-api/webapp \
+  && ls -l \
+  && ./build-docs.sh \
+  && echo "collecting statics" \
+  && ./collect-statics.sh
+
 RUN echo "installing client" \
   && . ~/.venvs/venvdrfpipeline/bin/activate \
   && cd /opt/antinex-client \
@@ -199,6 +208,8 @@ ENV USE_ENV drf-dev
 ENV DJANGO_WORKER_START_SCRIPT /opt/antinex-api/run-worker.sh
 ENV APP_START_SCRIPT /opt/antinex-api/run-django.sh
 ENV MIGRATION_SCRIPT /opt/antinex-api/run-migrations.sh
+ENV SKIP_BUILD_DOCS 1
+ENV SKIP_COLLECT_STATICS 1
 
 WORKDIR /opt/antinex-core
 
