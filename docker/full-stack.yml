@@ -15,6 +15,7 @@ services:
       - "8888:8888"
       - "8080:8080"
       - "8889:8889"
+      - "8890:8890"
       - "6006:6006"
     # volumes:
     # for sharing inside the container

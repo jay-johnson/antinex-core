@@ -59,6 +59,8 @@ View Notebook Presentation Slides
 
 #.  Use the non-vertical scolling url: http://localhost:8889/Slides-AntiNex-Protecting-Django.slides.html
 
+#.  Use the non-vertical scolling url: http://localhost:8890/Slides-AntiNex-Using-Pre-Trained-Deep-Neural-Networks-For-Defense.slides.html
+
 Run
 ---
 
