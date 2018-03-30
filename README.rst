@@ -10,6 +10,11 @@ Accuracy + Training + Cross Validation in a Jupyter Notebook
 
 https://github.com/jay-johnson/antinex-core/blob/master/docker/notebooks/AntiNex-Protecting-Django.ipynb
 
+Using a Pre-Trained Deep Neural Network in a Jupyter Notebook
+-------------------------------------------------------------
+
+https://github.com/jay-johnson/antinex-core/blob/master/docker/notebooks/AntiNex-Using-Pre-Trained-Deep-Neural-Networks-For-Defense.ipynb
+
 .. _AntiNex datasets: https://github.com/jay-johnson/antinex-datasets
 
 Overview
