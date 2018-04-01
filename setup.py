@@ -31,6 +31,7 @@ cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
 requires_that_fail_on_rtd = [
+    "tensorflow",
     "tables"
 ]
 
@@ -62,7 +63,6 @@ install_requires = [
     "sphinx-autobuild",
     "sphinx_bootstrap_theme",
     "sphinx_rtd_theme",
-    "tensorflow",
     "tox",
     "tqdm",
     "unittest2",
