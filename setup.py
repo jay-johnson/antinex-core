@@ -31,8 +31,9 @@ cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
 requires_that_fail_on_rtd = [
-    "tensorflow",
-    "tables"
+    "h5py",
+    "tables",
+    "tensorflow"
 ]
 
 install_requires = [
@@ -45,7 +46,6 @@ install_requires = [
     "docker-compose",
     "flake8>=3.4.1",
     "future",
-    "h5py",
     "keras",
     "matplotlib",
     "numpy",
