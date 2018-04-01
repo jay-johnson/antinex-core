@@ -13,9 +13,10 @@ before_install:
   - export REPO=jayjohnson/ai-core
   - echo "Building Docker with tag=${USE_VERSION}"
   - echo ""
-  - echo "Testing Docker Hub credentials"
+  - echo "Testing Docker Hub credentials username=${DOCKER_USERNAME}"
   - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
   - echo "Docker Hub credentials are working"
+  - exit 1
 
 install:
   - pip install -e .
