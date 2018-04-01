@@ -1,6 +1,9 @@
 AntiNex Core
 ============
 
+.. image:: https://travis-ci.org/jay-johnson/antinex-core.svg?branch=master
+    :target: https://travis-ci.org/jay-johnson/antinex-core
+
 Automating network exploit detection using highly accurate pre-trained deep neural networks.
 
 As of 2018-03-12, the core can repeatedly predict attacks on Django, Flask, React + Redux, Vue, and Spring application servers by training using the pre-recorded `AntiNex datasets`_ with cross validation scores above **~99.8%** with automated scaler normalization.

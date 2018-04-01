@@ -3,12 +3,40 @@ language: python
 python:
   - 3.6
 
+services:
+  - docker
+
 before_install:
   - export PYTHONPATH=$HOME/builds/jay-johnson/antinex-core
   - export PIP_USE_MIRRORS=true
+  - export USE_VERSION=$(cat setup.py | grep " version=" | sed -e 's/"/ /g' | awk '{print $2}')
+  - export REPO=jayjohnson/ai-core
+  - echo "Building Docker with tag=${USE_VERSION}"
+  - echo ""
+  - echo "Testing Docker Hub credentials"
+  - docker login -e=$DOCKER_EMAIL -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD
+  - echo "Docker Hub credentials are working"
 
 install:
   - pip install -e .
 
 script:
   - python setup.py test
+
+after_success:
+  - export USE_VERSION=$(cat setup.py | grep " version=" | sed -e 's/"/ /g' | awk '{print $2}')
+  - echo "Test Success - Branch=${TRAVIS_BRANCH} Version=${USE_VERSION} Pull Request=${TRAVIS_PULL_REQUEST} Tag=${TRAVIS_TAG}"
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then echo -e "Push Container to Docker Hub"; fi
+  - echo "Logging into Docker Hub"
+  - docker login -e=$DOCKER_EMAIL -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - echo "starting: docker build -f Dockerfile -t ${REPO} ."
+  - docker build -f docker/Dockerfile -t $REPO .
+  - echo "docker tag ${REPO}:${COMMIT} ${REPO}"
+  - docker tag $REPO:$COMMIT $REPO
+  - echo "docker tag ${REPO}:${COMMIT} ${REPO}"
+  - docker tag $REPO:$COMMIT $REPO:$USE_VERSION
+  - echo "docker push ${REPO}"
+  - docker push $REPO
+  - echo "docker push ${REPO}:${USE_VERSION}"
+  - docker push $REPO:$USE_VERSION
