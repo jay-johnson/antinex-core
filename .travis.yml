@@ -16,7 +16,7 @@ before_install:
   - echo "Testing Docker Hub credentials username=${DOCKER_USERNAME}"
   - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
   - echo "Docker Hub credentials are working"
-  - echo "will create build using: docker tag ${REPO} ${REPO}:${USE_VERSION}"
+  - echo "Build using: docker tag ${REPO} ${REPO}:${USE_VERSION}"
 
 install:
   - pip install -e .
