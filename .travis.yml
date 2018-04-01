@@ -16,7 +16,6 @@ before_install:
   - echo "Testing Docker Hub credentials username=${DOCKER_USERNAME}"
   - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
   - echo "Docker Hub credentials are working"
-  - exit 1
 
 install:
   - pip install -e .
