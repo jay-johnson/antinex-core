@@ -26,8 +26,13 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
+
 cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
+
+requires_that_fail_on_rtd = [
+    "tables"
+]
 
 install_requires = [
     "antinex-utils",
@@ -49,10 +54,14 @@ install_requires = [
     "pycodestyle",
     "pydocstyle",
     "pylint",
-    "seaborn",
-    "scikit-learn",
+    "recommonmark",
     "requests",
-    "tables",
+    "scikit-learn",
+    "seaborn",
+    "sphinx",
+    "sphinx-autobuild",
+    "sphinx_bootstrap_theme",
+    "sphinx_rtd_theme",
     "tensorflow",
     "tox",
     "tqdm",
@@ -60,6 +69,9 @@ install_requires = [
     "mock"
 ]
 
+# if not on readthedocs.io get all the pips:
+if os.getenv("READTHEDOCS", "") == "":
+    install_requires = install_requires + requires_that_fail_on_rtd
 
 if sys.version_info < (3, 5):
     warnings.warn(
