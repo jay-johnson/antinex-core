@@ -26,6 +26,7 @@ if os.getenv("READTHEDOCS", "") != "":
             return MagicMock()
 
     MOCK_MODULES = [
+        'antinex-utils',
         'tensorflow'
     ]
     sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
