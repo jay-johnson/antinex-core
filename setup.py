@@ -30,7 +30,6 @@ cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
 requires_that_fail_on_rtd = [
-    "antinex-utils",
     "h5py",
     "keras",
     "tables",
@@ -38,6 +37,7 @@ requires_that_fail_on_rtd = [
 ]
 
 install_requires = [
+    "antinex-utils",
     "celery>=4.1.0",
     "celery-connectors",
     "celery-loaders",
