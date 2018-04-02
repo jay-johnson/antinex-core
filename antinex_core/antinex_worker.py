@@ -240,7 +240,7 @@ def start_antinex_core_worker():
     to this broker
 
     ``TRAIN_QUEUE=webapp.train.requests`` ``Train a New DNN``
-    requests from this queue in the broker`
+    requests from this queue in the broker
 
     ``PREDICT_QUEUE=webapp.predict.requests`` - consume ``Prediction``
     requests from this queue in the broker
