@@ -31,6 +31,7 @@ if os.getenv("READTHEDOCS", "") != "":
         'antinex_utils.ev',
         'antinex_utils.consts',
         'antinex_utils.make_predictions',
+        'antinex_utils.make_predictions.make_predictions',
         'antinex_utils.utils',
         'keras',
         'keras.models',
