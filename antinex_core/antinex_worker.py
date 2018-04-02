@@ -223,7 +223,7 @@ max_msgs = int(ev(
     "100"))
 max_models = int(ev(
     "MAX_MODELS",
-    "10"))
+    "100"))
 
 log.info("Creating antinex core")
 core = AntiNexCore(

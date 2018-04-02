@@ -85,7 +85,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.25",
+    version="1.0.26",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
@@ -99,6 +99,7 @@ setup(
     url="https://github.com/jay-johnson/antinex-core",
     packages=[
         "antinex_core",
+        "antinex_core.scripts",
         "antinex_core.log"
     ],
     package_data={},
