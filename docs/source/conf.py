@@ -27,7 +27,14 @@ if os.getenv("READTHEDOCS", "") != "":
 
     MOCK_MODULES = [
         'antinex-utils',
-        'tensorflow'
+        'tensorflow',
+        'tensorflow.aux-bin',
+        'tensorflow.contrib',
+        'tensorflow.core',
+        'tensorflow.examples',
+        'tensorflow.include',
+        'tensorflow.python',
+        'tensorflow.tools'
     ]
     sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
