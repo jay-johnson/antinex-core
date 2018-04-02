@@ -12,21 +12,35 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import os
 import sys
-from mock import Mock as MagicMock
+from unittest.mock import MagicMock
 
 
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-        return MagicMock()
+html_theme_options = {}
+if os.getenv("READTHEDOCS", "") != "":
 
+    class Mock(MagicMock):
+        @classmethod
+        def __getattr__(cls, name):
+            return MagicMock()
 
-MOCK_MODULES = [
-    'tensorflow'
-]
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
-# sys.path.insert(0, os.path.abspath('.'))
+    MOCK_MODULES = [
+        'tensorflow'
+    ]
+    sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+
+    html_theme_options = {
+        'canonical_url': '',
+        'logo_only': False,
+        'display_version': True,
+        'prev_next_buttons_location': 'bottom',
+        # Toc options
+        'collapse_navigation': False,
+        'sticky_navigation': True,
+        'navigation_depth': 4
+    }
+# if on readthedocs
 
 
 # -- Project information -----------------------------------------------------

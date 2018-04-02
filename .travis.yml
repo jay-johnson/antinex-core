@@ -21,6 +21,8 @@ install:
   - pip install -e .
 
 script:
+  - flake8
+  - pycodestyle --exclude=.tox,.eggs
   - python setup.py test
 
 after_success:

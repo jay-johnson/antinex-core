@@ -14,6 +14,18 @@ log = build_colorized_logger(name=name)
 
 class AntiNexProcessor:
 
+    """
+    AntiNexProcessor handles messages found in the subscribed queues.
+
+    Conceptually ``Wokers use a Processor`` to handle messages.
+
+    This one is responsible for processing ``Prediction`` and ``Training``
+    messages. It also manages a dictionary (``self.models``) of pre-trained
+    deep neural networks for reused by a ``label`` name inside the
+    consumed JSON dictionary message.
+
+    """
+
     def __init__(
             self,
             name="antinex-prc",

@@ -8,7 +8,7 @@ Celery Worker
 Here is the Celery Worker's source code.
 
 .. automodule:: antinex_core.antinex_worker
-   :members: setup_celery_logging,AntiNexCore,app,core,broker_url,train_queue_name,predict_queue_name,max_msgs,max_models
+   :members: setup_celery_logging,AntiNexCore,start_antinex_core_worker
 
 Process Consumed Messages From the Queues
 =========================================

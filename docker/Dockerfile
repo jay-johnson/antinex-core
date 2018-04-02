@@ -185,7 +185,7 @@ RUN ls /opt/antinex-core/ \
   && chmod 777 /opt/antinex-core/docker/jupyter/start-container.sh \
   && chmod 777 /opt/antinex-core/run-antinex-core.sh
 
-ENV PIPELINE_PROCESSOR_SCRIPT /opt/antinex-pipeline/network_pipeline/scripts/packets-redis.py
+ENV PIPELINE_PROCESSOR_SCRIPT /opt/antinex-pipeline/network_pipeline/scripts/packets_redis.py
 ENV JUPYTER_START_SCRIPT /opt/antinex-core/docker/jupyter/start-container.sh
 ENV NO_DB_WORKER_START_SCRIPT /opt/antinex-core/run-antinex-core.sh
 ENV LOG_CFG /opt/antinex-core/antinex_core/log/colors-logging.json

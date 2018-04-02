@@ -1,3 +1,4 @@
+import os
 from celery import Celery
 from celery import signals
 from antinex_core.log.setup_logging import build_colorized_logger
@@ -18,6 +19,23 @@ log = build_colorized_logger(name=name)
 
 
 class AntiNexCore:
+
+    """
+    AntiNex Celery Worker Core (core)
+
+    This is a Celery Worker used to connect to a message broker
+    (``BROKER_URL=redis://localhost:6379/6`` by default) and monitor
+    messages to consume off the following queues:
+
+    ``TRAIN_QUEUE`` - ``webapp.train.requests``
+
+    ``PREDICT_QUEUE`` - ``webapp.predict.requests``
+
+    The core trains and manages pre-trained deep neural networks (dnn) by
+    training request ``label`` name. If you want to use an existing
+    dnn, then just set the ``label`` name on a ``Prediction`` request and
+    the core will do the rest.
+    """
 
     def __init__(
             self,
@@ -209,45 +227,77 @@ class AntiNexCore:
 log.info("loading Celery app")
 app = Celery()
 
-broker_url = ev(
-    "BROKER_URL",
-    "redis://localhost:6379/6")
-train_queue_name = ev(
-    "TRAIN_QUEUE",
-    "webapp.train.requests")
-predict_queue_name = ev(
-    "PREDICT_QUEUE",
-    "webapp.predict.requests")
-max_msgs = int(ev(
-    "MAX_MSGS",
-    "100"))
-max_models = int(ev(
-    "MAX_MODELS",
-    "100"))
 
-log.info("Creating antinex core")
-core = AntiNexCore(
-    name="core",
-    broker_url=broker_url,
-    train_queue_name=train_queue_name,
-    predict_queue_name=predict_queue_name,
-    max_msgs=max_msgs,
-    max_models=max_models)
-try:
-    log.info("Starting antinex core")
-    core.start(
-        app=app)
-except Exception as e:
-    log.info(("Core hit exception={} shutting down")
-             .format(
-                e))
-    core.shutdown()
-    log.info(("canceling consumer to queue={}")
-             .format(
-                train_queue_name))
-    app.control.cancel_consumer(train_queue_name)
-    log.info(("canceling consumer to queue={}")
-             .format(
-                predict_queue_name))
-    app.control.cancel_consumer(predict_queue_name)
-# end of try/ex
+def start_antinex_core_worker():
+    """start_antinex_core_worker
+
+
+    This is the main function handler for starting the AntiNex Workers.
+
+    Set these environment variables as needed:
+
+    ``BROKER_URL=redis://localhost:6379/6`` - Celery will connect
+    to this broker
+
+    ``TRAIN_QUEUE=webapp.train.requests`` ``Train a New DNN``
+    requests from this queue in the broker`
+
+    ``PREDICT_QUEUE=webapp.predict.requests`` - consume ``Prediction``
+    requests from this queue in the broker
+
+    ``MAX_MSGS=100`` - how many historical messages are saved for replay
+
+    ``MAX_MODELS=100`` - max pre-trained dnns per worker
+    """
+    broker_url = ev(
+        "BROKER_URL",
+        "redis://localhost:6379/6")
+    train_queue_name = ev(
+        "TRAIN_QUEUE",
+        "webapp.train.requests")
+    predict_queue_name = ev(
+        "PREDICT_QUEUE",
+        "webapp.predict.requests")
+    max_msgs = int(ev(
+        "MAX_MSGS",
+        "100"))
+    max_models = int(ev(
+        "MAX_MODELS",
+        "100"))
+
+    log.info("Creating antinex core")
+    core = AntiNexCore(
+        name="core",
+        broker_url=broker_url,
+        train_queue_name=train_queue_name,
+        predict_queue_name=predict_queue_name,
+        max_msgs=max_msgs,
+        max_models=max_models)
+    try:
+        log.info("Starting antinex core")
+        core.start(
+            app=app)
+    except Exception as e:
+        log.info(("Core hit exception={} shutting down")
+                 .format(
+                    e))
+        core.shutdown()
+        log.info(("canceling consumer to queue={}")
+                 .format(
+                    train_queue_name))
+        app.control.cancel_consumer(train_queue_name)
+        log.info(("canceling consumer to queue={}")
+                 .format(
+                    predict_queue_name))
+        app.control.cancel_consumer(predict_queue_name)
+    # end of try/ex
+# end of start_antinex_core_worker
+
+
+# If not on readthedocs boot up like normal
+if os.getenv("READTHEDOCS", "") == "":
+    start_antinex_core_worker()
+else:
+    if __name__ == "__main__":
+        start_antinex_core_worker()
+# If not on readthedocs boot up like normal

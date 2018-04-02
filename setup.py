@@ -26,7 +26,6 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
-
 cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
@@ -85,7 +84,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.26",
+    version="1.0.27",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
@@ -110,13 +109,13 @@ setup(
     ],
     scripts=[
         "./run-antinex-core.sh",
-        "./publish_train_request.py",
-        "./publish_predict_request.py",
-        "./antinex_core/scripts/antinex-scaler-django.py",
-        "./antinex_core/scripts/standalone-scaler-django.py",
-        "./antinex_core/scripts/convert-bottom-rows-to-json.py",
-        "./antinex_core/scripts/update-repos-in-container.sh",
-        "./publish_regression_predict.py"
+        "./antinex_core/scripts/publish_train_request.py",
+        "./antinex_core/scripts/publish_predict_request.py",
+        "./antinex_core/scripts/antinex_scaler_django.py",
+        "./antinex_core/scripts/standalone_scaler_django.py",
+        "./antinex_core/scripts/convert_bottom_rows_to_json.py",
+        "./antinex_core/scripts/publish_regression_predict.py",
+        "./antinex_core/scripts/update-repos-in-container.sh"
     ],
     use_2to3=True,
     classifiers=[
