@@ -5,7 +5,7 @@ import sys
 import json
 import argparse
 import pandas as pd
-from antinex_utils.log.setup_logging import build_colorized_logger
+from antinex_core.log.setup_logging import build_colorized_logger
 from antinex_utils.utils import ppj
 
 

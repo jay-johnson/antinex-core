@@ -27,6 +27,10 @@ if os.getenv("READTHEDOCS", "") != "":
 
     MOCK_MODULES = [
         'antinex-utils',
+        'antinex_utils.build_scaler_train_and_test_datasets',
+        'antinex_utils.consts',
+        'antinex_utils.utils',
+        'keras',
         'tensorflow',
         'tensorflow.aux-bin',
         'tensorflow.contrib',
@@ -34,6 +38,7 @@ if os.getenv("READTHEDOCS", "") != "":
         'tensorflow.examples',
         'tensorflow.include',
         'tensorflow.python',
+        'tensorflow.python.training',
         'tensorflow.tools'
     ]
     sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)

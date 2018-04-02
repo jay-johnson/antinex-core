@@ -32,6 +32,7 @@ os.chdir(os.path.abspath(cur_path))
 requires_that_fail_on_rtd = [
     "antinex-utils",
     "h5py",
+    "keras",
     "tables",
     "tensorflow"
 ]
@@ -45,7 +46,6 @@ install_requires = [
     "docker-compose",
     "flake8>=3.4.1",
     "future",
-    "keras",
     "matplotlib",
     "numpy",
     "pandas",
@@ -84,7 +84,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.27",
+    version="1.0.28",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
