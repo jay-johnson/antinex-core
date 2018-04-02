@@ -24,13 +24,6 @@ if os.getenv("READTHEDOCS", "") != "":
         @classmethod
         def __getattr__(cls, name):
             return MagicMock()
-    # 'antinex-utils',
-    #  'antinex_utils.build_scaler_train_and_test_datasets',
-    #  'antinex_utils.ev',
-    #  'antinex_utils.consts',
-    #  'antinex_utils.make_predictions',
-    #  'antinex_utils.make_predictions.make_predictions',
-    #  'antinex_utils.utils',
 
     MOCK_MODULES = [
         'keras',
