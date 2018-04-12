@@ -21,9 +21,9 @@ install:
   - pip install -e .
 
 script:
-  - echo "Running Lint Tests"
-  - flake8
-  - pycodestyle --exclude=.tox,.eggs
+  # - echo "Running Lint Tests"
+  # - flake8
+  # - pycodestyle --exclude=.tox,.eggs
   - echo "Running Unit Tests"
   - python setup.py test
 

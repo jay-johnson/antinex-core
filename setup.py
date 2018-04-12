@@ -44,7 +44,7 @@ install_requires = [
     "colorlog",
     "coverage",
     "docker-compose",
-    "flake8>=3.4.1",
+    "flake8",
     "future",
     "matplotlib",
     "numpy",
@@ -84,7 +84,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.29",
+    version="1.0.30",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
