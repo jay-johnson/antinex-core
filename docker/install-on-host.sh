@@ -3,12 +3,12 @@
 logo=" 
         db                              88  888b      88                          
        d88b                      ,d     88  8888b     88                          
-      d8/\8b                     88         88 \8b    88                          
-     d8/  \8b      8b,dPPYba,  MM88MMM  88  88  \8b   88   ,adPPYba,  8b,     ,d8 
-    d8YaaaaY8b     88P'     8a   88     88  88   \8b  88  a8P_____88   \Y8, ,8P/  
-   d8888888888b    88       88   88     88  88    \8b 88  8PP******      )888(    
-  d8/        \8b   88       88   88,    88  88     \8888  \8b,   ,aa   ,d8/ \8b,  
- d8/          \8b  88       88   \Y888  88  88      \888   \Ybbd8//   8P/    \Y8 " 
+      d8  8b                     88         88  8b    88                          
+     d8    8b      8b,dPPYba,  MM88MMM  88  88   8b   88   ,adPPYba,  8b,     ,d8 
+    d8YaaaaY8b     88P'     8a   88     88  88    8b  88  a8P_____88    Y8, ,8P   
+   d88******88b    88       88   88     88  88     8b 88  8PP******      )888(    
+  d8          8b   88       88   88,    88  88      8888  *8b,   ,aa   ,d8   8b,  
+ d8            8b  88       88   *Y888  88  88       888   *Ybbd88*   8P       Y8 " 
 
 txtund=""
 txtbld=""
@@ -208,5 +208,9 @@ echo "echo 'alias core=\"cd /opt/antinex/core && source ~/.venvs/venvdrfpipeline
 echo "echo 'alias client=\"cd /opt/antinex/client && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
 echo "echo 'alias pipeline=\"cd /opt/antinex/pipeline && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
 echo "echo 'alias utils=\"cd /opt/antinex/utils && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
+echo "echo 'alias docs=\"cd /opt/antinex/api/webapp/drf_network_pipeline/docs && source ~/.venvs/venvdrfpipeline/bin/activate && make html\"' >> ~/.bashrc"
+echo "echo 'alias run=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api/webapp && python manage.py runserver 0.0.0.0:8080\"' >> ~/.bashrc"
+echo "echo 'alias sqlmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
+echo "echo 'alias dbmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/drf-dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
 
 exit 0
