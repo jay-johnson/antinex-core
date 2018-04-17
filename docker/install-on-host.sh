@@ -55,9 +55,23 @@ err() {
     echo "${bldred}$@ $txtrst"
 }
 
+should_update=0
+if [[ $# -ge 1 ]]; then
+    if [[ "$1" == "update" ]]; then
+        should_update=1
+    fi
+fi
+if [[ "${UPDATE}" == "1" ]]; then
+    should_update=1
+fi
+
 echo ""
 start_date=$(date +"%Y-%m-%d %H:%M:%S")
-anmt "Welcome. starting install at: ${start_date}"
+if [[ "${should_update}" == "0" ]]; then
+    anmt "Welcome - Starting install: ${start_date}"
+else
+    anmt "Welcome - Update started: ${start_date}"
+fi
 echo ""
 info "${logo}"
 echo ""
@@ -95,7 +109,7 @@ if [[ ! -e $install_dir/api ]]; then
     anmt "cloning api"
     git clone ${transport_prefix}jay-johnson/train-ai-with-django-swagger-jwt.git $install_dir/api
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating api"
         cd $install_dir/api
         git pull
@@ -105,7 +119,7 @@ if [[ ! -e $install_dir/client ]]; then
     anmt "cloning client"
     git clone ${transport_prefix}jay-johnson/antinex-client.git $install_dir/client
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating client"
         cd $install_dir/client
         git pull
@@ -115,7 +129,7 @@ if [[ ! -e $install_dir/utils ]]; then
     anmt "cloning utils"
     git clone ${transport_prefix}jay-johnson/antinex-utils.git $install_dir/utils
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating utils"
         cd $install_dir/utils
         git pull
@@ -125,7 +139,7 @@ if [[ ! -e $install_dir/core ]]; then
     anmt "cloning core"
     git clone ${transport_prefix}jay-johnson/antinex-core.git $install_dir/core
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating core"
         cd $install_dir/core
         git pull
@@ -135,7 +149,7 @@ if [[ ! -e $install_dir/pipeline ]]; then
     anmt "cloning pipeline"
     git clone ${transport_prefix}jay-johnson/network-pipeline.git $install_dir/pipeline
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating pipeline"
         cd $install_dir/pipeline
         git pull
@@ -145,7 +159,7 @@ if [[ ! -e $install_dir/antinex-datasets ]]; then
     anmt "cloning antinex datasets"
     git clone ${transport_prefix}jay-johnson/antinex-datasets.git $install_dir/antinex-datasets
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating antinex datasets"
         cd $install_dir/antinex-datasets
         git pull
@@ -155,7 +169,7 @@ if [[ ! -e $install_dir/datasets ]]; then
     anmt "cloning network pipeline datasets"
     git clone ${transport_prefix}jay-johnson/network-pipeline-datasets.git $install_dir/datasets
 else
-    if [[ "${UPDATE}" == "1" ]]; then
+    if [[ "${should_update}" == "1" ]]; then
         anmt "updating network pipeline datasets"
         cd $install_dir/datasets
         git pull
@@ -187,7 +201,12 @@ cd $install_dir/api
 pip install -r ./requirements.txt
 
 finish_date=$(date +"%Y-%m-%d %H:%M:%S")
-anmt "Install finished at time: ${finish_date}"
+
+if [[ "${should_update}" == "0" ]]; then
+    anmt "Install finished: ${finish_date}"
+else
+    anmt "Update finished: ${finish_date}"
+fi
 
 echo ""
 anmt "Activate virtualenv with command:"
