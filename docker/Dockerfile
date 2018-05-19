@@ -43,7 +43,7 @@ RUN echo "creating directories" \
   && mkdir -p -m 777 /opt/data \
   && chmod 777 /opt
 
-RUN echo "creating log files"
+RUN echo "creating log files" \
   && touch /var/log/antinex/core/ai-core.log && chmod 777 /var/log/antinex/core/ai-core.log \
   && touch /var/log/antinex/api/api.log && chmod 777 /var/log/antinex/api/api.log \
   && touch /var/log/antinex/jupyter/jupyter.log && chmod 777 /var/log/antinex/jupyter/jupyter.log \
@@ -54,7 +54,7 @@ RUN echo "preparing virtualenv" \
   && pip install --upgrade virtualenvwrapper pip
 
 RUN echo "creating virtualenv" \
-  && virtualenv -p python3 /opt/venv
+  && virtualenv -p python3 /opt/venv \
   && chmod 777 /opt/venv
 
 RUN echo "setting up virtualenv" \
