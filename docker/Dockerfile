@@ -219,9 +219,6 @@ ENV USE_VENV /opt/venv
 
 WORKDIR /opt/antinex-core
 
-RUN cd /opt/antinex-api && git pull
-RUN cd /opt/antinex-core && git checkout openshift && . /opt/venv/bin/activate && pip install -e .
-
 # set for anonymous user access in the container
 RUN find /opt/datasets -type d -exec chmod 777 {} \;
 RUN find /opt/antinex-api -type d -exec chmod 777 {} \;
