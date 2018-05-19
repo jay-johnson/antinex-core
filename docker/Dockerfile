@@ -219,15 +219,18 @@ ENV USE_VENV /opt/venv
 
 WORKDIR /opt/antinex-core
 
+RUN cd /opt/antinex-api && git pull
+RUN cd /opt/antinex-core && git checkout openshift && . /opt/venv/bin/activate && pip install -e .
+
 # set for anonymous user access in the container
-RUN chmod 777 find /opt/datasets -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/antinex-api -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/antinex-utils -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/antinex-core -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/antinex-datasets -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/antinex-client -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/antinex-pipeline -type d -exec chmod 777 {} \;
-RUN chmod 777 find /opt/venv -type d -exec chmod 777 {} \;
-RUN chmod 777 find /var/log -type d -exec chmod 777 {} \;
+RUN find /opt/datasets -type d -exec chmod 777 {} \;
+RUN find /opt/antinex-api -type d -exec chmod 777 {} \;
+RUN find /opt/antinex-utils -type d -exec chmod 777 {} \;
+RUN find /opt/antinex-core -type d -exec chmod 777 {} \;
+RUN find /opt/antinex-datasets -type d -exec chmod 777 {} \;
+RUN find /opt/antinex-client -type d -exec chmod 777 {} \;
+RUN find /opt/antinex-pipeline -type d -exec chmod 777 {} \;
+RUN find /opt/venv -type d -exec chmod 777 {} \;
+RUN find /var/log -type d -exec chmod 777 {} \;
 
 ENTRYPOINT /opt/antinex-core/run-antinex-core.sh

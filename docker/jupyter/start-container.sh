@@ -61,7 +61,8 @@ if [[ "${SUPPORTS_SLIDES}" == "1" ]]; then
     else
         echo "failed to find notebook for slides: ${host_as_slides}"
     fi
-# end of slide hosting
+fi
+# end of slide hosting if needed
 
 echo "Starting Jupyter"
 notebook_config=/opt/antinex-core/docker/jupyter/jupyter_notebook_config.py
