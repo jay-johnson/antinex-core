@@ -1,9 +1,23 @@
 #!/bin/bash
 
-if [[ -e "/home/$(whoami)/.venvs/venvdrfpipeline/bin/activate" ]]; then
-    source /home/$(whoami)/.venvs/venvdrfpipeline/bin/activate
-    pip list
+venv=~/.venvs/venvdrfpipeline
+
+# support for using venv in other locations
+if [[ "${USE_VENV}" != "" ]]; then
+    if [[ -e ${USE_VENV}/bin/activate ]]; then
+        echo "Using custom virtualenv: ${USE_VENV}"
+        venv=${USE_VENV}
+    else
+        echo "Did not find custom virtualenv: ${USE_VENV}"
+        exit 1
+    fi
 fi
+
+echo "Activating and installing pips"
+. ${venv}/bin/activate
+echo ""
+
+pip list
 
 echo ""
 echo "Loading Celery environment variables"
@@ -31,14 +45,19 @@ if [[ "${WORKER_NAME}" != "" ]]; then
     worker_name=$WORKER_NAME
 fi
 
-echo ""
+if [[ "${SHARED_LOG_CFG}" != "" ]]; then
+    echo ""
+    echo "Logging config: ${SHARED_LOG_CFG}"
+    echo ""
+fi
+
 if [[ "${num_workers}" == "1" ]]; then
     echo "Starting Worker=${worker_module}"
     echo "celery worker -A ${worker_module} -c ${num_workers} -l ${log_level} -n ${worker_name}"
     celery worker -A $worker_module -c ${num_workers} -l ${log_level} -n ${worker_name}
 else
     echo "Starting Workers=${worker_module}"
-    echo "celery worker -A ${worker_module} -c ${num_workers} -l ${log_level} -n ${worker_name} --logfile=${log_file}"
-    celery worker -A $worker_module -c ${num_workers} -l ${log_level} -n ${worker_name} --logfile=${log_file}
+    echo "celery worker -A ${worker_module} -c ${num_workers} -l ${log_level} -n ${worker_name}"
+    celery worker -A $worker_module -c ${num_workers} -l ${log_level} -n ${worker_name}
 fi
 echo ""
