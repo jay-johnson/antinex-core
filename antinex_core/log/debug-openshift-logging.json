@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "()": "colorlog.ColoredFormatter",
+            "format": "%(log_color)s%(asctime)s - %(name)s - %(levelname)s - %(message)s%(reset)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        }
+    },
+    "loggers": {
+        "my_module": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+            "propagate": "no"
+        }
+    },
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console"]
+    }
+}
