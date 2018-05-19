@@ -47,7 +47,7 @@ install_requires = [
     "flake8<=3.4.1",
     "future",
     "matplotlib",
-    "numpy",
+    "numpy>=1.13.3",
     "pandas",
     "pep8>=1.7.1",
     "pipenv",
