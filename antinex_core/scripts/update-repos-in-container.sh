@@ -2,7 +2,7 @@
 
 source ~/.venvs/venvdrfpipeline/bin/activate
 
-repos="/opt/antinex-api /opt/antinex-core /opt/antinex-utils /opt/antinex-client /opt/antinex-datasets /opt/antinex-pipeline /opt/datasets"
+repos="/opt/antinex/api /opt/antinex/core /opt/antinex/utils /opt/antinex/client /opt/antinex/datasets /opt/antinex/pipeline /opt/antinex/datasets /opt/antinex/antinex-datasets"
 
 echo "updating repos: ${repos}"
 

@@ -75,10 +75,10 @@ def build_a_scaler_dataset_and_train_a_dnn():
     deep neural network for training and predictions
     """
 
-    # noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
+    # noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets
     dataset = os.getenv(
         "DATASET",
-        ("/opt/antinex-datasets/v1/webapps/"
+        ("/opt/antinex/antinex-datasets/v1/webapps/"
          "django/training-ready/v1_django_cleaned.csv"))
     model_backup_file = os.getenv(
         "MODEL_BACKUP_FILE",

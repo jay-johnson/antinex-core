@@ -176,14 +176,6 @@ else
     fi
 fi
 
-# legacy docs use these paths. it needs to be removed in the future
-if [[ ! -e /opt/antinex-datasets ]]; then
-    ln -s $install_dir/antinex-datasets /opt/antinex-datasets
-fi
-if [[ ! -e /opt/datasets ]]; then
-    ln -s $install_dir/datasets /opt/datasets
-fi
-
 anmt "installing pipeline"
 cd $install_dir/pipeline
 pip install -e .

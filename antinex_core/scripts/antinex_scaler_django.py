@@ -75,10 +75,10 @@ def run_antinex_scaler_normalization_on_django_dataset():
 
     """
 
-    # noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
+    # noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets
     dataset = os.getenv(
         "DATASET",
-        ("/opt/antinex-datasets/v1/webapps/"
+        ("/opt/antinex/antinex-datasets/v1/webapps/"
          "django/training-ready/v1_django_cleaned.csv"))
     model_backup_file = os.getenv(
         "MODEL_BACKUP_FILE",

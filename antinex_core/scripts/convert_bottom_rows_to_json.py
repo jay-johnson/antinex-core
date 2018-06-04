@@ -24,7 +24,7 @@ def convert_bottom_rows_to_json():
                              "rows in a dataset to JSON"))
     parser.add_argument(
         "-f",
-        help=("dataset to use default /opt/antinex-datasets/v1/webapps/"
+        help=("dataset to use default /opt/antinex/antinex-datasets/v1/webapps/"
               "django/training-ready/v1_django_cleaned.csv"),
         required=False,
         dest="dataset")
@@ -42,7 +42,7 @@ def convert_bottom_rows_to_json():
     args = parser.parse_args()
 
     debug = False
-    dataset = ("/opt/antinex-datasets/v1/webapps/django/training-ready/"
+    dataset = ("/opt/antinex/antinex-datasets/v1/webapps/django/training-ready/"
                "v1_django_cleaned.csv")
     bottom_row_idx = -5
     if args.debug:

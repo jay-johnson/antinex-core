@@ -65,8 +65,8 @@ fi
 # end of slide hosting if needed
 
 echo "Starting Jupyter"
-notebook_config=/opt/antinex-core/docker/jupyter/jupyter_notebook_config.py
-notebook_dir=/opt/antinex-core/docker/notebooks
+notebook_config=/opt/antinex/core/docker/jupyter/jupyter_notebook_config.py
+notebook_dir=/opt/antinex/core/docker/notebooks
 
 if [[ "${JUPYTER_CONFIG}" != "" ]]; then
     if [[ -e ${JUPYTER_CONFIG} ]]; then

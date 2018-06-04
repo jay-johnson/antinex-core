@@ -158,7 +158,8 @@ Please make sure to clone the dataset repo to the pre-configured location:
 
 ::
 
-    git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex-datasets
+    mkdir -p -m 777 /opt/antinex
+    git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets
 
 Django - Train and Predict
 --------------------------
