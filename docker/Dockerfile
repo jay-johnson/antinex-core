@@ -44,8 +44,10 @@ RUN echo "creating directories" \
   && chmod 777 /opt
 
 RUN echo "creating log files" \
-  && touch /var/log/antinex/core/ai-core.log && chmod 777 /var/log/antinex/core/ai-core.log \
   && touch /var/log/antinex/api/api.log && chmod 777 /var/log/antinex/api/api.log \
+  && touch /var/log/antinex/api/worker.log && chmod 777 /var/log/antinex/api/worker.log \
+  && touch /var/log/antinex/core/ai-core.log && chmod 777 /var/log/antinex/core/ai-core.log \
+  && touch /var/log/antinex/client/client.log && chmod 777 /var/log/antinex/client/client.log \
   && touch /var/log/antinex/jupyter/jupyter.log && chmod 777 /var/log/antinex/jupyter/jupyter.log \
   && touch /var/log/antinex/pipeline/pipeline.log && chmod 777 /var/log/antinex/pipeline/pipeline.log \
   && touch /var/log/antinex/client/client.log && chmod 777 /var/log/antinex/client/client.log
@@ -112,17 +114,23 @@ RUN echo "checking repos in container" \
 RUN echo "installing utils" \
   && . /opt/venv/bin/activate \
   && cd /opt/antinex/utils \
-  && pip install --upgrade -e .
+  && pip install --upgrade -e . \
+  && cd docs \
+  && make html
 
 RUN echo "installing pipeline" \
   && . /opt/venv/bin/activate \
   && cd /opt/antinex/pipeline \
-  && pip install --upgrade -e .
+  && pip install --upgrade -e . \
+  && cd docs \
+  && make html
 
 RUN echo "installing core" \
   && . /opt/venv/bin/activate \
   && cd /opt/antinex/core \
-  && pip install --upgrade -e .
+  && pip install --upgrade -e . \
+  && cd docs \
+  && make html
 
 RUN echo "installing api" \
   && . /opt/venv/bin/activate \
@@ -141,7 +149,9 @@ RUN echo "building docs" \
 RUN echo "installing client" \
   && . /opt/venv/bin/activate \
   && cd /opt/antinex/client \
-  && pip install --upgrade -e .
+  && pip install --upgrade -e . \
+  && cd docs \
+  && make html
 
 RUN echo "installing jupyter pips" \
   && . /opt/venv/bin/activate \
