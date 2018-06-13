@@ -51,7 +51,6 @@ install_requires = [
     "pep8>=1.7.1",
     "pipenv",
     "pydocstyle<=2.3.1",
-    "pydocstyle",
     "pylint",
     "recommonmark",
     "requests",
