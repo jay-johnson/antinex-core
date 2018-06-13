@@ -71,7 +71,6 @@ RUN echo "" >> /etc/bashrc \
   && echo "alias api='cd /opt/antinex/api'" >> /etc/bashrc \
   && echo "alias core='cd /opt/antinex/core'" >> /etc/bashrc \
   && echo "alias client='cd /opt/antinex/client'" >> /etc/bashrc \
-  && echo "alias fz='cd /opt/antinex/fuzzball'" >> /etc/bashrc \
   && echo "alias pipe='cd /opt/antinex/pipeline'" >> /etc/bashrc \
   && echo "alias ut='cd /opt/antinex/utils'" >> /etc/bashrc \
   && echo "alias ad='cd /opt/antinex/antinex-datasets'" >> /etc/bashrc \
