@@ -29,7 +29,13 @@ class PyTest(TestCommand):
 cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
+"""
+Read the docs fails to install tensorflow - 2018-06-012
+error: setuptools 39.2.0 is installed but setuptools<=39.1.0
+is required by {'tensorflow'}
+"""
 requires_that_fail_on_rtd = [
+    "antinex-utils",
     "h5py",
     "keras",
     "tables",
@@ -37,7 +43,6 @@ requires_that_fail_on_rtd = [
 ]
 
 install_requires = [
-    "antinex-utils",
     "celery>=4.1.0",
     "celery-connectors",
     "celery-loaders",
@@ -82,7 +87,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.48",
+    version="1.0.49",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
