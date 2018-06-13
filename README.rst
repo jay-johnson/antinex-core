@@ -103,6 +103,8 @@ Start the container for browsing with Jupyter:
 
 ::
 
+    # if you do not have docker compose installed you can try installing it with:
+    # pip install docker-compose
     cd docker
     ./start-stack.sh
 

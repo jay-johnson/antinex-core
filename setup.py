@@ -43,7 +43,6 @@ install_requires = [
     "celery-loaders",
     "colorlog",
     "coverage",
-    "docker-compose",
     "flake8<=3.4.1",
     "future",
     "matplotlib",
