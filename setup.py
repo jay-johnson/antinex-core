@@ -44,8 +44,8 @@ requires_that_fail_on_rtd = [
 
 install_requires = [
     "celery>=4.1.0",
-    "celery-connectors",
-    "celery-loaders",
+    "celery-connectors>=1.0.27",
+    "celery-loaders>=1.0.5",
     "colorlog",
     "coverage",
     "flake8<=3.4.1",
@@ -55,7 +55,7 @@ install_requires = [
     "pandas",
     "pep8>=1.7.1",
     "pipenv",
-    "pydocstyle<=2.3.1",
+    "pycodestyle<=2.3.1",
     "pylint",
     "recommonmark",
     "requests",
@@ -87,7 +87,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.0.49",
+    version="1.0.50",
     description=("AntiNex publisher-subscriber core for processing "
                  "training and prediction requests for deep neural "
                  "networks to detect network exploits using Keras "
