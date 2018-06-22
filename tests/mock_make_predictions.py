@@ -1,4 +1,4 @@
-from antinex_core.log.setup_logging import build_colorized_logger
+from spylunking.log.setup_logging import build_colorized_logger
 from antinex_utils.consts import SUCCESS
 from antinex_utils.consts import ERR
 from antinex_utils.consts import FAILED

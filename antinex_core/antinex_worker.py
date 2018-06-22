@@ -1,7 +1,7 @@
 import os
 from celery import Celery
 from celery import signals
-from antinex_core.log.setup_logging import build_colorized_logger
+from spylunking.log.setup_logging import build_colorized_logger
 from antinex_utils.utils import ev
 from celery_connectors.subscriber import Subscriber
 from antinex_core.antinex_processor import AntiNexProcessor

@@ -6,7 +6,7 @@ import datetime
 import argparse
 import json
 import pandas as pd
-from antinex_core.log.setup_logging import build_colorized_logger
+from spylunking.log.setup_logging import build_colorized_logger
 from celery_connectors.publisher import Publisher
 
 

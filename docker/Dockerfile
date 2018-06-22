@@ -75,6 +75,7 @@ RUN echo "" >> /etc/bashrc \
   && echo "alias ut='cd /opt/antinex/utils'" >> /etc/bashrc \
   && echo "alias ad='cd /opt/antinex/antinex-datasets'" >> /etc/bashrc \
   && echo "alias ds='cd /opt/antinex/datasets'" >> /etc/bashrc \
+  && echo "alias sp='cd /opt/spylunking'" >> /etc/bashrc \
   && echo "alias vi='/usr/bin/vim'" >> /etc/bashrc
 
 RUN echo "setting up /etc/pip.conf" \
@@ -92,6 +93,7 @@ RUN echo "cloning repos" \
   && git clone https://github.com/jay-johnson/antinex-utils.git /opt/antinex/utils \
   && git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets \
   && git clone https://github.com/jay-johnson/network-pipeline-datasets.git /opt/antinex/datasets \
+  && git clone https://github.com/jay-johnson/spylunking.git /opt/spylunking \
   && chmod 775 \
     /opt/antinex/api \
     /opt/antinex/core \
@@ -99,7 +101,8 @@ RUN echo "cloning repos" \
     /opt/antinex/pipeline \
     /opt/antinex/utils \
     /opt/antinex/antinex-datasets \
-    /opt/antinex/datasets
+    /opt/antinex/datasets \
+    /opt/spylunking
 
 RUN echo "checking repos in container" \
   && ls -l /opt/antinex/api \
@@ -108,7 +111,15 @@ RUN echo "checking repos in container" \
   && ls -l /opt/antinex/pipeline \
   && ls -l /opt/antinex/utils \
   && ls -l /opt/antinex/antinex-datasets \
-  && ls -l /opt/antinex/datasets
+  && ls -l /opt/antinex/datasets \
+  && ls -l /opt/spylunking
+
+RUN echo "installing python logger with splunk support" \
+  && . /opt/venv/bin/activate \
+  && cd /opt/spylunking \
+  && pip install --upgrade -e . \
+  && cd docs \
+  && make html
 
 RUN echo "installing utils" \
   && . /opt/venv/bin/activate \
@@ -240,6 +251,7 @@ RUN find /opt/antinex/pipeline -type d -exec chmod 777 {} \;
 RUN find /opt/antinex/utils -type d -exec chmod 777 {} \;
 RUN find /opt/antinex/antinex-datasets -type d -exec chmod 777 {} \;
 RUN find /opt/antinex/datasets -type d -exec chmod 777 {} \;
+RUN find /opt/spylunking -type d -exec chmod 777 {} \;
 RUN find /opt/venv -type d -exec chmod 777 {} \;
 RUN find /var/log -type d -exec chmod 777 {} \;
 
