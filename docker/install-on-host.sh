@@ -175,7 +175,20 @@ else
         git pull
     fi
 fi
+if [[ ! -e /opt/spylunking ]]; then
+    anmt "cloning spylunking logging"
+    git clone ${transport_prefix}jay-johnson/spylunking.git /opt/spylunking
+else
+    if [[ "${should_update}" == "1" ]]; then
+        anmt "updating spylunking"
+        cd /opt/spylunking
+        git pull
+    fi
+fi
 
+anmt "installing spylunking logger"
+cd /opt/spylunking
+pip install -e .
 anmt "installing pipeline"
 cd $install_dir/pipeline
 pip install -e .
@@ -196,32 +209,33 @@ finish_date=$(date +"%Y-%m-%d %H:%M:%S")
 
 if [[ "${should_update}" == "0" ]]; then
     anmt "Install finished: ${finish_date}"
+
+    echo ""
+    anmt "Activate virtualenv with command:"
+    echo "source ${venv}/bin/activate"
+
+    echo ""
+    anmt "Set your bashrc alias by running these commands in your shell:"
+    echo ""
+    echo "echo \"\" >> ~/.bashrc"
+    echo "echo '###################################' >> ~/.bashrc"
+    echo "echo '#' >> ~/.bashrc"
+    echo "echo '# AntiNex nav aliases' >> ~/.bashrc"
+    echo "echo '#' >> ~/.bashrc"
+
+    echo "echo 'alias api=\"cd /opt/antinex/api && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
+    echo "echo 'alias core=\"cd /opt/antinex/core && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
+    echo "echo 'alias client=\"cd /opt/antinex/client && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
+    echo "echo 'alias dbmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/drf-dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
+    echo "echo 'alias dev=\"cd /opt/antinex/api && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
+    echo "echo 'alias docs=\"cd /opt/antinex/api/webapp/drf_network_pipeline/docs && source ~/.venvs/venvdrfpipeline/bin/activate && make html\"' >> ~/.bashrc"
+    echo "echo 'alias pipeline=\"cd /opt/antinex/pipeline && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
+    echo "echo 'alias sqlmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
+    echo "echo 'alias spylunk=\"source ~/.venvs/venvdrfpipeline/bin/activate && cd /opt/spylunking && pip install -e .\"' >> ~/.bashrc"
+    echo "echo 'alias run=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api/webapp && python manage.py runserver 0.0.0.0:8080\"' >> ~/.bashrc"
+    echo "echo 'alias utils=\"cd /opt/antinex/utils && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
 else
     anmt "Update finished: ${finish_date}"
 fi
-
-echo ""
-anmt "Activate virtualenv with command:"
-echo "source ${venv}/bin/activate"
-
-echo ""
-anmt "Set your bashrc alias by running these commands in your shell:"
-echo ""
-echo "echo \"\" >> ~/.bashrc"
-echo "echo '###################################' >> ~/.bashrc"
-echo "echo '#' >> ~/.bashrc"
-echo "echo '# AntiNex nav aliases' >> ~/.bashrc"
-echo "echo '#' >> ~/.bashrc"
-
-echo "echo 'alias dev=\"cd /opt/antinex/api && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
-echo "echo 'alias api=\"cd /opt/antinex/api && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
-echo "echo 'alias core=\"cd /opt/antinex/core && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
-echo "echo 'alias client=\"cd /opt/antinex/client && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
-echo "echo 'alias pipeline=\"cd /opt/antinex/pipeline && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
-echo "echo 'alias utils=\"cd /opt/antinex/utils && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
-echo "echo 'alias docs=\"cd /opt/antinex/api/webapp/drf_network_pipeline/docs && source ~/.venvs/venvdrfpipeline/bin/activate && make html\"' >> ~/.bashrc"
-echo "echo 'alias run=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api/webapp && python manage.py runserver 0.0.0.0:8080\"' >> ~/.bashrc"
-echo "echo 'alias sqlmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
-echo "echo 'alias dbmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/drf-dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
 
 exit 0

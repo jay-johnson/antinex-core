@@ -201,6 +201,9 @@ RUN echo "Enabling Rise" \
   && /opt/venv/bin/jupyter-nbextension enable rise --py
 
 RUN ls /opt/antinex/core/ \
+  && cp /opt/antinex/core/docker/update-all.sh /opt/antinex/update-all.sh \
+  && chmod 777 /opt/antinex/core/docker/update-all.sh \
+  && chmod 777 /opt/antinex/update-all.sh \
   && chmod 777 /opt/antinex/core/docker/jupyter/start-container.sh \
   && chmod 777 /opt/antinex/core/run-antinex-core.sh
 
