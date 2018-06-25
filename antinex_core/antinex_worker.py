@@ -14,8 +14,7 @@ def setup_celery_logging(**kwargs):
     pass
 
 
-name = "antinex"
-log = build_colorized_logger(name=name)
+log = build_colorized_logger(name=__name__)
 
 
 class AntiNexCore:
@@ -100,6 +99,8 @@ class AntiNexCore:
         self.conn_attrs = {
             "task_default_queue": "antinex.worker.control",
             "task_default_exchange": "antinex.worker.control",
+            # noqa http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-worker_hijack_root_logger
+            "worker_hijack_root_logger": False,
             # noqa http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-worker_prefetch_multiplier
             "worker_prefetch_multiplier": 1,  # consume 1 message at a time
             # noqa http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-worker_prefetch_multiplie
@@ -113,7 +114,7 @@ class AntiNexCore:
             "task_publish_retry_policy": self.task_publish_retry_policy}
 
         self.processor = AntiNexProcessor(
-            name="{}-prc".format(
+            name="{}.prc".format(
                     self.name),
             max_msgs=max_msgs,
             max_models=max_models)

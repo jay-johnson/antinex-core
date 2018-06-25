@@ -7,8 +7,7 @@ from antinex_utils.consts import ERROR
 from antinex_utils.consts import FAILED
 
 
-name = "antinex-prc-send-res"
-log = build_colorized_logger(name=name)
+log = build_colorized_logger(name=__name__)
 
 
 def send_results_to_broker(
@@ -19,6 +18,10 @@ def send_results_to_broker(
     :param loc: api-generated dictionary for where to send the results
     :param final_results: prediction results from the worker
     """
+
+    log.info((
+        'sending back={}').format(
+            loc))
 
     status = ERROR
     org_model = None

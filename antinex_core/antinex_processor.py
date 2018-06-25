@@ -8,8 +8,7 @@ from antinex_utils.consts import SUCCESS
 from antinex_core.send_results_to_broker import send_results_to_broker
 
 
-name = "antinex-prc"
-log = build_colorized_logger(name=name)
+log = build_colorized_logger(name=__name__)
 
 
 class AntiNexProcessor:
@@ -28,7 +27,7 @@ class AntiNexProcessor:
 
     def __init__(
             self,
-            name="antinex-prc",
+            name="prc",
             max_msgs=100,
             max_models=100):
         """__init__
@@ -58,7 +57,6 @@ class AntiNexProcessor:
         :param body: body contents
         :param message: message object
         """
-
         should_ack = True
         should_reject = False
         should_requeue = False

@@ -2,9 +2,10 @@
 
 import os
 import json
-import logging
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasClassifier
@@ -15,14 +16,11 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-import seaborn as sns
+from spylunking.log.setup_logging import build_colorized_logger
 
 
-name = "standalone-scaler-django"
-logging.basicConfig(
-    level=logging.DEBUG)
-log = logging.getLogger(name)
+log = build_colorized_logger(
+    name='antinex_core.scripts.standalone_scaler_django')
 
 
 def build_model(
@@ -68,11 +66,14 @@ def build_model(
 # end of build_model
 
 
-def build_a_scaler_dataset_and_train_a_dnn():
+def build_a_scaler_dataset_and_train_a_dnn(
+        name='not-set'):
     """build_a_scaler_dataset_and_train_a_dnn
 
     Build a scaler-normalized dataset and then build a
     deep neural network for training and predictions
+
+    :param name: name for the dnn
     """
 
     # noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets

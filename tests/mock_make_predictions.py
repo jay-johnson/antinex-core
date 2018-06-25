@@ -1,12 +1,11 @@
-from spylunking.log.setup_logging import build_colorized_logger
+from spylunking.log.setup_logging import test_logger
 from antinex_utils.consts import SUCCESS
 from antinex_utils.consts import ERR
 from antinex_utils.consts import FAILED
 from tests.mock_model import MockModel
 
 
-name = "mock-predictions"
-log = build_colorized_logger(name=name)
+log = test_logger(name='mock-predictions')
 
 
 def build_response_data(

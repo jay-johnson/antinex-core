@@ -10,6 +10,10 @@ from spylunking.log.setup_logging import build_colorized_logger
 from celery_connectors.publisher import Publisher
 
 
+log = build_colorized_logger(
+    name='antinex_core.scripts.publish_regression_predict')
+
+
 def publish_regression_prediction_to_broker():
     """publish_regression_prediction_to_broker
 
@@ -42,7 +46,6 @@ def publish_regression_prediction_to_broker():
     args = parser.parse_args()
 
     name = "predict-publisher"
-    log = build_colorized_logger(name=name)
 
     log.info("{} - start".format(name))
 

@@ -3,12 +3,11 @@ import json
 import uuid
 import unittest
 import pandas as pd
-from spylunking.log.setup_logging import build_colorized_logger
+from spylunking.log.setup_logging import test_logger
 from celery_connectors.publisher import Publisher
 
 
-name = "test_base"
-log = build_colorized_logger(name=name)
+log = test_logger(name='test_base')
 
 
 class BaseTestCase(unittest.TestCase):

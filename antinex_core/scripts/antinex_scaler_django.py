@@ -5,6 +5,8 @@ import sys
 import json
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 from spylunking.log.setup_logging import build_colorized_logger
 from antinex_utils.consts import SUCCESS
 from antinex_utils.build_scaler_train_and_test_datasets import \
@@ -17,12 +19,10 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 
-name = "antinex-scaler-django"
-log = build_colorized_logger(name=name)
+log = build_colorized_logger(
+    name='antinex_core.scripts.antinex_scaler_django')
 
 
 def build_model(
@@ -68,11 +68,13 @@ def build_model(
 # end of build_model
 
 
-def run_antinex_scaler_normalization_on_django_dataset():
+def run_antinex_scaler_normalization_on_django_dataset(
+        name='not-set'):
     """run_antinex_scaler_normalization_on_django_dataset
 
     Process the Django AntiNex dataset using scaler normalization
 
+    :param name: name of the dnn
     """
 
     # noqa git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets

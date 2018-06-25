@@ -9,8 +9,8 @@ from spylunking.log.setup_logging import build_colorized_logger
 from antinex_utils.utils import ppj
 
 
-name = "convert-to-json"
-log = build_colorized_logger(name=name)
+log = build_colorized_logger(
+    name='antinex_core.scripts.convert_bottom_rows_to_json')
 
 
 def convert_bottom_rows_to_json():

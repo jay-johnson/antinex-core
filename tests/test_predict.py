@@ -4,12 +4,11 @@ from tests.mock_make_predictions import mock_make_predictions_success
 from tests.mock_make_predictions import mock_make_predictions_error
 from tests.mock_make_predictions import mock_make_predictions_fail
 from tests.mock_message import MockMessage
-from spylunking.log.setup_logging import build_colorized_logger
+from spylunking.log.setup_logging import test_logger
 from antinex_core.antinex_processor import AntiNexProcessor
 
 
-name = "test-predict"
-log = build_colorized_logger(name=name)
+log = test_logger(name='test-predict')
 
 
 class TestPredict(BaseTestCase):
