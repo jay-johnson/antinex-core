@@ -22,7 +22,7 @@ from sklearn.metrics import confusion_matrix
 
 
 log = build_colorized_logger(
-    name='antinex_core.scripts.antinex_scaler_django')
+    name='scaler_django')
 
 
 def build_model(

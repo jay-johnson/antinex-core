@@ -14,7 +14,8 @@ def setup_celery_logging(**kwargs):
     pass
 
 
-log = build_colorized_logger(name=__name__)
+log = build_colorized_logger(
+    name='worker')
 
 
 class AntiNexCore:

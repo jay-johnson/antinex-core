@@ -11,7 +11,7 @@ from celery_connectors.publisher import Publisher
 
 
 log = build_colorized_logger(
-    name='antinex_core.scripts.publish_regression_predict')
+    name='publish_regression_predict')
 
 
 def publish_regression_prediction_to_broker():

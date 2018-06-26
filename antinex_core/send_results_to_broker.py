@@ -7,7 +7,8 @@ from antinex_utils.consts import ERROR
 from antinex_utils.consts import FAILED
 
 
-log = build_colorized_logger(name=__name__)
+log = build_colorized_logger(
+    name='send_results')
 
 
 def send_results_to_broker(

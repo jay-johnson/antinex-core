@@ -11,7 +11,7 @@ from celery_connectors.publisher import Publisher
 
 
 log = build_colorized_logger(
-    name="antinex_core.scripts.publish_train_request_to_broker")
+    name='publish_train_req')
 
 
 def publish_train_request_to_broker():

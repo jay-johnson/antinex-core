@@ -20,7 +20,7 @@ from spylunking.log.setup_logging import build_colorized_logger
 
 
 log = build_colorized_logger(
-    name='antinex_core.scripts.standalone_scaler_django')
+    name='standalone_scaler_django')
 
 
 def build_model(

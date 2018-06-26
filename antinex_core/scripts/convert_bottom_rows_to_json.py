@@ -10,7 +10,7 @@ from antinex_utils.utils import ppj
 
 
 log = build_colorized_logger(
-    name='antinex_core.scripts.convert_bottom_rows_to_json')
+    name='convert_bottom_rows_to_json')
 
 
 def convert_bottom_rows_to_json():

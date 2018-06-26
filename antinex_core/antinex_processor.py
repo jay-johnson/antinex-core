@@ -8,7 +8,8 @@ from antinex_utils.consts import SUCCESS
 from antinex_core.send_results_to_broker import send_results_to_broker
 
 
-log = build_colorized_logger(name=__name__)
+log = build_colorized_logger(
+    name='processor')
 
 
 class AntiNexProcessor:

@@ -11,7 +11,7 @@ from celery_connectors.publisher import Publisher
 
 
 log = build_colorized_logger(
-    name='antinex_core.scripts.convert_bottom_rows_to_json')
+    name='publish_predict_request')
 
 
 def publish_prediction_request_to_broker():
