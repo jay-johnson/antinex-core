@@ -232,7 +232,7 @@ if [[ "${should_update}" == "0" ]]; then
     echo "echo 'alias pipeline=\"cd /opt/antinex/pipeline && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
     echo "echo 'alias sqlmigrate=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api && ./run-migrations.sh\"' >> ~/.bashrc"
     echo "echo 'alias spylunk=\"source ~/.venvs/venvdrfpipeline/bin/activate && cd /opt/spylunking && pip install -e .\"' >> ~/.bashrc"
-    echo "echo 'alias run=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api/webapp && python manage.py runserver 0.0.0.0:8080\"' >> ~/.bashrc"
+    echo "echo 'alias run=\"source ~/.venvs/venvdrfpipeline/bin/activate && source /opt/antinex/api/envs/dev.env && cd /opt/antinex/api/webapp && python manage.py runserver 0.0.0.0:8010\"' >> ~/.bashrc"
     echo "echo 'alias utils=\"cd /opt/antinex/utils && source ~/.venvs/venvdrfpipeline/bin/activate\"' >> ~/.bashrc"
 else
     anmt "Update finished: ${finish_date}"

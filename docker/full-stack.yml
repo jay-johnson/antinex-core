@@ -12,10 +12,15 @@ services:
       - SHARED_DIR=/opt/data
       - BROKER_URL=redis://0.0.0.0:6379/6
     ports:
+      # api port
+      - "8010:8010"
+      # jupyter port
       - "8888:8888"
-      - "8080:8080"
+      # jupyter slides 1
       - "8889:8889"
+      # jupyter slides 2
       - "8890:8890"
+      # tensorboard
       - "6006:6006"
     # volumes:
     # for sharing inside the container

@@ -87,15 +87,17 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.1.2",
-    description=("AntiNex publisher-subscriber core for processing "
-                 "training and prediction requests for deep neural "
-                 "networks to detect network exploits using Keras "
-                 "and Tensorflow in near real-time."),
-    long_description=("AntiNex publisher-subscriber core for processing "
-                      "training and prediction requests for deep neural "
-                      "networks to detect network exploits using Keras "
-                      "and Tensorflow in near real-time."),
+    version="1.2.0",
+    description=(
+        "AntiNex publisher-subscriber core for processing "
+        "training and prediction requests for deep neural "
+        "networks to detect network exploits using Keras "
+        "and Tensorflow in near real-time."),
+    long_description=(
+        "AntiNex publisher-subscriber core for processing "
+        "training and prediction requests for deep neural "
+        "networks to detect network exploits using Keras "
+        "and Tensorflow in near real-time."),
     author="Jay Johnson",
     author_email="jay.p.h.johnson@gmail.com",
     url="https://github.com/jay-johnson/antinex-core",
