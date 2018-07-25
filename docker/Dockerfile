@@ -93,6 +93,7 @@ RUN echo "cloning repos" \
   && git clone https://github.com/jay-johnson/antinex-utils.git /opt/antinex/utils \
   && git clone https://github.com/jay-johnson/antinex-datasets.git /opt/antinex/antinex-datasets \
   && git clone https://github.com/jay-johnson/network-pipeline-datasets.git /opt/antinex/datasets \
+  && git clone https://github.com/jay-johnson/deploy-to-kubernetes.git /opt/deploy-to-kubernetes \
   && git clone https://github.com/jay-johnson/spylunking.git /opt/spylunking \
   && chmod 775 \
     /opt/antinex/api \
@@ -102,6 +103,7 @@ RUN echo "cloning repos" \
     /opt/antinex/utils \
     /opt/antinex/antinex-datasets \
     /opt/antinex/datasets \
+    /opt/deploy-to-kubernetes \
     /opt/spylunking
 
 RUN echo "checking repos in container" \
@@ -112,6 +114,7 @@ RUN echo "checking repos in container" \
   && ls -l /opt/antinex/utils \
   && ls -l /opt/antinex/antinex-datasets \
   && ls -l /opt/antinex/datasets \
+  && ls -l /opt/deploy-to-kubernetes \
   && ls -l /opt/spylunking
 
 RUN echo "installing python logger with splunk support" \
@@ -254,6 +257,7 @@ RUN find /opt/antinex/pipeline -type d -exec chmod 777 {} \;
 RUN find /opt/antinex/utils -type d -exec chmod 777 {} \;
 RUN find /opt/antinex/antinex-datasets -type d -exec chmod 777 {} \;
 RUN find /opt/antinex/datasets -type d -exec chmod 777 {} \;
+RUN find /opt/deploy-to-kubernetes -type d -exec chmod 777 {} \;
 RUN find /opt/spylunking -type d -exec chmod 777 {} \;
 RUN find /opt/venv -type d -exec chmod 777 {} \;
 RUN find /var/log -type d -exec chmod 777 {} \;
