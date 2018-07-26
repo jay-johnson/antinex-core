@@ -51,6 +51,11 @@ if [[ "${SHARED_LOG_CFG}" != "" ]]; then
     echo ""
 fi
 
+# allow overriding the core's broker url
+if  [[ "${ANTINEX_CORE_BROKER_URL}" != "" ]]; then
+    export BROKER_URL="${ANTINEX_CORE_BROKER_URL}"
+fi
+
 # Use the CORE_EXTRA_ARGS to pass in specific args:
 # http://docs.celeryproject.org/en/latest/reference/celery.bin.worker.html
 #
