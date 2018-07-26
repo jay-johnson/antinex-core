@@ -55,6 +55,9 @@ fi
 if  [[ "${ANTINEX_CORE_BROKER_URL}" != "" ]]; then
     export BROKER_URL="${ANTINEX_CORE_BROKER_URL}"
 fi
+if  [[ "${ANTINEX_CORE_NUM_WORKERS}" != "" ]]; then
+    num_workers=${ANTINEX_CORE_NUM_WORKERS}
+fi
 
 # Use the CORE_EXTRA_ARGS to pass in specific args:
 # http://docs.celeryproject.org/en/latest/reference/celery.bin.worker.html
@@ -65,12 +68,15 @@ fi
 # --without-gossip
 # --without-mingle
 
-if [[ "${num_workers}" == "1" ]]; then
-    echo "Starting Core=${worker_module}"
+if [[ "${ANTINEX_CORE_WORKER_ARGS}" != "" ]]; then
+    echo "Launch custom core worker: ${ANTINEX_CORE_WORKER_ARGS}"
+    celery worker ${ANTINEX_CORE_WORKER_ARGS}
+elif [[ "${num_workers}" == "1" ]]; then
+    echo "Starting core worker=${worker_module}"
     echo "celery worker -A ${worker_module} -c ${num_workers} -l ${log_level} -n ${worker_name} ${CORE_EXTRA_ARGS}"
     celery worker -A $worker_module -c ${num_workers} -l ${log_level} -n ${worker_name} ${CORE_EXTRA_ARGS}
 else
-    echo "Starting Core=${worker_module}"
+    echo "Starting core workers=${worker_module}"
     echo "celery worker -A ${worker_module} -c ${num_workers} -l ${log_level} -n ${worker_name} ${CORE_EXTRA_ARGS}"
     celery worker -A $worker_module -c ${num_workers} -l ${log_level} -n ${worker_name} ${CORE_EXTRA_ARGS}
 fi
