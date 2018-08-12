@@ -210,6 +210,11 @@ RUN ls /opt/antinex/core/ \
   && chmod 777 /opt/antinex/core/docker/jupyter/start-container.sh \
   && chmod 777 /opt/antinex/core/run-antinex-core.sh
 
+RUN echo "Downgrading numpy and setuptools for tensorflow" \
+  && . /opt/venv/bin/activate \
+  && pip install --upgrade numpy==1.14.5 \
+  && pip install --upgrade setuptools==39.1.0
+
 ENV PIPELINE_PROCESSOR_SCRIPT /opt/antinex/pipeline/network_pipeline/scripts/packets_redis.py
 ENV JUPYTER_START_SCRIPT /opt/antinex/core/docker/jupyter/start-container.sh
 ENV NO_DB_WORKER_START_SCRIPT /opt/antinex/core/run-antinex-core.sh
