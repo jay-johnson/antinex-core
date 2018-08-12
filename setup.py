@@ -87,7 +87,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.3.5",
+    version="1.3.6",
     description=(
         "AntiNex publisher-subscriber core for processing "
         "training and prediction requests for deep neural "
@@ -114,12 +114,13 @@ setup(
     ],
     scripts=[
         "./run-antinex-core.sh",
-        "./antinex_core/scripts/publish_train_request.py",
-        "./antinex_core/scripts/publish_predict_request.py",
         "./antinex_core/scripts/antinex_scaler_django.py",
-        "./antinex_core/scripts/standalone_scaler_django.py",
         "./antinex_core/scripts/convert_bottom_rows_to_json.py",
         "./antinex_core/scripts/publish_regression_predict.py",
+        "./antinex_core/scripts/publish_train_request.py",
+        "./antinex_core/scripts/publish_predict_request.py",
+        "./antinex_core/scripts/run_s3_test.py",
+        "./antinex_core/scripts/standalone_scaler_django.py",
         "./antinex_core/scripts/update-repos-in-container.sh"
     ],
     use_2to3=True,

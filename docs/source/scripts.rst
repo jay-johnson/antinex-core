@@ -38,3 +38,36 @@ Usage:
 
 .. automodule:: antinex_core.scripts.convert_bottom_rows_to_json
    :members: convert_bottom_rows_to_json
+
+S3 Testing
+----------
+
+Run this script to verify S3 is working.
+
+Set Environment Variables
+=========================
+
+Set these as needed for your S3 deployment
+
+::
+
+    export S3_ACCESS_KEY=<access key>
+    export S3_SECRET_KEY=<secret key>
+    export S3_REGION_NAME=<region name: us-east-1>
+    export S3_ADDRESS=<S3 endpoint address host:port like: minio-service:9000>
+    export S3_UPLOAD_FILE=<path to file to upload>
+    export S3_BUCKET=<bucket name - s3-verification-tests default>
+    export S3_BUCKET_KEY=<bucket key name - s3-worked-on-%Y-%m-%d-%H-%M-%S default>
+    export S3_SECURE=<use ssl '1', disable with '0' which is the default>
+
+Run S3 Verification Test
+------------------------
+
+Run the included S3 verification script:
+
+::
+
+    run-s3-test.py
+
+.. automodule:: antinex_core.scripts.run_s3_test
+   :members: run_s3_test
