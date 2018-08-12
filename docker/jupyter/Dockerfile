@@ -16,8 +16,15 @@ RUN echo "creating project directories" \
   && . /opt/venv/bin/activate \
   && cd /opt/antinex/core \
   && echo "installing pip upgrades" \
-  && pip install --upgrade -e . \
-  && echo "building docs" \
+  && pip install --upgrade -e .
+
+RUN echo "Downgrading numpy and setuptools for tensorflow" \
+  && . /opt/venv/bin/activate \
+  && pip install --upgrade numpy==1.14.5 \
+  && pip install --upgrade setuptools==39.1.0
+
+RUN echo "Making Sphinx docs" \
+  && . /opt/venv/bin/activate \
   && cd /opt/antinex/core/docs \
   && ls -l \
   && make html

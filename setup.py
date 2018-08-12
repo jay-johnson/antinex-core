@@ -50,7 +50,7 @@ install_requires = [
     "flake8<=3.4.1",
     "future",
     "matplotlib",
-    "numpy>=1.13.3",
+    "numpy>=1.14.5",
     "pandas",
     "pep8>=1.7.1",
     "pipenv",
@@ -87,7 +87,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.3.7",
+    version="1.3.8",
     description=(
         "AntiNex publisher-subscriber core for processing "
         "training and prediction requests for deep neural "
