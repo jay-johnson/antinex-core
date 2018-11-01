@@ -14,6 +14,7 @@ RUN apt-get update \
     software-properties-common \
     git \
     vim \
+    pandoc \
     python3 \
     python3-dev \
     python3-pip \

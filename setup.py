@@ -25,6 +25,15 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
+long_description = ''
+try:
+    import pypandoc
+    long_description = pypandoc.convert(
+        'README.rst',
+        'rst')
+except(IOError, ImportError):
+    long_description = open('README.rst').read()
+
 cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
@@ -52,6 +61,7 @@ install_requires = [
     "matplotlib",
     "numpy>=1.14.5",
     "pandas",
+    "pypandoc",
     "pep8>=1.7.1",
     "pipenv",
     "pycodestyle<=2.3.1",
@@ -87,17 +97,13 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.3.8",
+    version="1.3.9",
     description=(
         "AntiNex publisher-subscriber core for processing "
         "training and prediction requests for deep neural "
         "networks to detect network exploits using Keras "
         "and Tensorflow in near real-time."),
-    long_description=(
-        "AntiNex publisher-subscriber core for processing "
-        "training and prediction requests for deep neural "
-        "networks to detect network exploits using Keras "
-        "and Tensorflow in near real-time."),
+    long_description=long_description,
     author="Jay Johnson",
     author_email="jay.p.h.johnson@gmail.com",
     url="https://github.com/jay-johnson/antinex-core",
