@@ -25,15 +25,13 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
-long_description = ''
-try:
-    import pypandoc
-    long_description = pypandoc.convert(
-        'README.rst',
-        'rst')
-except(IOError, ImportError):
-    long_description = open('README.rst').read()
-
+"""
+https://packaging.python.org/guides/making-a-pypi-friendly-readme/
+check the README.rst works on pypi as the
+long_description with:
+twine check dist/*
+"""
+long_description = open('README.rst').read()
 cur_path, cur_script = os.path.split(sys.argv[0])
 os.chdir(os.path.abspath(cur_path))
 
@@ -61,7 +59,6 @@ install_requires = [
     "matplotlib",
     "numpy>=1.14.5",
     "pandas",
-    "pypandoc",
     "pep8>=1.7.1",
     "pipenv",
     "pycodestyle<=2.3.1",
@@ -97,7 +94,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "antinex_core"))
 setup(
     name="antinex-core",
     cmdclass={"test": PyTest},
-    version="1.3.11",
+    version="1.3.12",
     description=(
         "AntiNex publisher-subscriber core for processing "
         "training and prediction requests for deep neural "
