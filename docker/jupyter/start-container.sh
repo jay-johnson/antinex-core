@@ -86,11 +86,19 @@ if [[ "${NOTEBOOK_DIR}" != "" ]]; then
     fi
 fi
 
+# 5.6.0 of notebook pip fails with --ip=*
+# now supports changing to debug without
+# logging into the container using an env var
+default_ip="0.0.0.0"
+if [[ "${JUPYTER_CUSTOM_IP}" != "" ]]; then
+    default_ip="${JUPYTER_CUSTOM_IP}"
+fi
+
 echo ""
 echo "Starting Jupyter with command: "
-echo "jupyter notebook --ip=* --port=8888 --no-browser --config=${notebook_config} --notebook-dir=${notebook_dir} --allow-root"
+echo "jupyter notebook --ip=${default_ip} --port=8888 --no-browser --config=${notebook_config} --notebook-dir=${notebook_dir} --allow-root"
 jupyter notebook \
-    --ip=* \
+    --ip=${default_ip} \
     --port=8888 \
     --no-browser \
     --config=${notebook_config} \
